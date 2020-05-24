@@ -1,3 +1,4 @@
+/backup_database
 
 # Created by https://www.gitignore.io/api/python,lazarus,archlinuxpackages
 # Edit at https://www.gitignore.io/?templates=python,lazarus,archlinuxpackages
@@ -153,3 +154,5 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/python,lazarus,archlinuxpackages
+
+*.sqlite

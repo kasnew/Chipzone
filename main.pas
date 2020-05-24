@@ -110,9 +110,7 @@ type
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
     procedure CheckBox2Click(Sender: TObject);
-    procedure CheckBox3Click(Sender: TObject);
     procedure CheckBox5Click(Sender: TObject);
     procedure DBGrid1CellClick();
     procedure DBGrid1DblClick(Sender: TObject);
@@ -391,11 +389,6 @@ begin
      DateTimePicker4.Date:=date;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
-begin
-  ShowMessage(inttostr(form1.Height));
-end;
-
 //включение фильтра поиска
 procedure TForm1.CheckBox2Click(Sender: TObject);
 begin
@@ -411,11 +404,6 @@ begin
           GroupBox2.Color:=clSkyBlue;
           CheckBox2.Color:=clDefault;
      end;
-end;
-
-procedure TForm1.CheckBox3Click(Sender: TObject);
-begin
-
 end;
 
 //включение статистики
@@ -529,11 +517,12 @@ begin
          begin
               MaxRect := Monitor.WorkareaRect;
               NewHeight := MaxRect.Height;
-              NewTop := MaxRect.Width;
+              //NewTop := MaxRect.Width;
 
-              SetBounds(Left, NewTop, Width, NewHeight-koef_heith);
+              SetBounds(0, NewTop, Width, NewHeight-koef_heith);
               trigger_form:=true;
          end;
+//     ShowMessage(inttostr(Left));
      predohranitel:=0;
      save_reserv;
      //подключение к базе даных

@@ -260,12 +260,11 @@ end;
 procedure TForm2.DBLookupComboBox1Change(Sender: TObject);
 begin
        SQLQuery4.RecNo:=DBLookupComboBox1.ItemIndex+1;
-       //ShowMessage(inttostr(DBLookupComboBox1.ItemIndex+1));
        edit7.Text:=SQLQuery4.FieldByName('Вход').Value;    // Edit11:TEdit
        edit5.Text:=SQLQuery4.FieldByName('Наименование_расходника').Value;
-       edit13.Text:=SQLQuery4.FieldByName('Приход').Value;;
-       //edit13.Text:=SQLQuery4.FieldByName('Приход').value;
+       edit13.Text:=SQLQuery4.FieldByName('Приход').Value;
 end;
+
 //активация кнопки "сохранить"
 procedure TForm2.Edit1Change(Sender: TObject);
 begin
@@ -336,7 +335,7 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-     SetBounds(Left, NewTop, Width, NewHeight-koef_heith);
+     SetBounds(0, NewTop, Width, NewHeight-koef_heith);
 end;
 
 //кнопка "закрыть"
