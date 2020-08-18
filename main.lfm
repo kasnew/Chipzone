@@ -14,7 +14,7 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poDesktopCenter
-  LCLVersion = '2.0.8.0'
+  LCLVersion = '2.0.10.0'
   WindowState = wsMaximized
   object GroupBox1: TGroupBox
     AnchorSideTop.Control = Owner
@@ -1190,18 +1190,18 @@ object Form1: TForm1
       'select * from Ремонт'
     )
     Params = <>
-    left = 144
-    top = 136
+    Left = 144
+    Top = 136
   end
   object DataSource1: TDataSource
     DataSet = SQLQuery1
-    left = 216
-    top = 136
+    Left = 216
+    Top = 136
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
-    left = 456
-    top = 24
+    Left = 456
+    Top = 24
     object MenuItem1: TMenuItem
       Caption = 'Файл'
       object MenuItem5: TMenuItem
@@ -1247,8 +1247,8 @@ object Form1: TForm1
   object OpenDialog1: TOpenDialog
     Title = 'Выберите резервную копию'
     Filter = '*.backup|*.backup'
-    left = 532
-    top = 24
+    Left = 532
+    Top = 24
   end
   object SQLQuery2: TSQLQuery
     PacketRecords = -1
@@ -1259,8 +1259,8 @@ object Form1: TForm1
       ''
     )
     Params = <>
-    left = 144
-    top = 200
+    Left = 144
+    Top = 200
   end
   object SQLite3Connection1: TSQLite3Connection
     Connected = False
@@ -1268,19 +1268,20 @@ object Form1: TForm1
     DatabaseName = '1.sqlite'
     KeepConnection = False
     Transaction = SQLTransaction1
-    left = 48
-    top = 136
+    AlwaysUseBigint = False
+    Left = 48
+    Top = 136
   end
   object SQLTransaction1: TSQLTransaction
     Active = False
     Database = SQLite3Connection1
-    left = 48
-    top = 88
+    Left = 48
+    Top = 88
   end
   object PopupMenu1: TPopupMenu
     Images = ImageList1
-    left = 384
-    top = 24
+    Left = 384
+    Top = 24
     object MenuItem14: TMenuItem
       Caption = 'Копировать'
       ImageIndex = 0
@@ -1327,8 +1328,8 @@ object Form1: TForm1
   end
   object frDBDataSet1: TfrDBDataSet
     DataSet = SQLQuery2
-    left = 280
-    top = 200
+    Left = 280
+    Top = 200
   end
   object frReport1: TfrReport
     Dataset = frDBDataSet1
@@ -1336,12 +1337,12 @@ object Form1: TForm1
     Options = []
     PreviewButtons = [pbZoom, pbLoad, pbSave, pbPrint, pbFind, pbHelp, pbExit]
     DataType = dtDataSet
-    left = 216
-    top = 200
+    Left = 216
+    Top = 200
   end
   object ImageList1: TImageList
-    left = 384
-    top = 88
+    Left = 384
+    Top = 88
     Bitmap = {
       4C690D0000001000000010000000B6B6B6FFB6B6B6FFB6B6B6FFB6B6B6FFB6B6
       B6FFB6B6B6FFB6B6B6FFB6B6B69F000000000000000000000000000000000000
@@ -1764,7 +1765,7 @@ object Form1: TForm1
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    left = 872
-    top = 40
+    Left = 872
+    Top = 40
   end
 end

@@ -613,6 +613,7 @@ begin
           FieldByName('Имя_заказчика').AsString:=name1;
           FieldByName('Оплачено').AsBoolean:=false;
           FieldByName('Перезвонить').AsBoolean:=false;
+          FieldByName('Выполнено').AsString:='Принято в '+TimeToStr(Now);
 
           if ((Sender as TMenuItem).Caption='Имя+телефон+техника')or((Sender as TMenuItem).Caption='Возврат') then
           FieldByName('Наименование_техники').AsString:=tech;
@@ -778,7 +779,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.51          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.52.2          '+ TimeToStr(Time);
 end;
 
 end.

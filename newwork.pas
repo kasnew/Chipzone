@@ -133,6 +133,7 @@ begin
           if memo2.Text<>'' then form1.SQLQuery1.FieldByName('Описание_неисправности').Asstring:=memo2.Text;
           form1.SQLQuery1.FieldByName('Оплачено').AsBoolean:=false;
           form1.sQLQuery1.FieldByName('Перезвонить').AsBoolean:=false;
+          form1.sQLQuery1.FieldByName('Выполнено').AsString:='Принято в '+TimeToStr(Now);
           //form1.SQLQuery1.fields.FieldByName('ID').Required:=false;
 
           form1.Sqlquery1.Post;// записываем данные
