@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, db, sqldb, FileUtil, DateTimePicker, Forms, Controls,
   Graphics, Dialogs, StdCtrls, ComCtrls, MaskEdit, Spin, DBGrids, Grids,
-  ExtCtrls, Buttons;
+  ExtCtrls, Buttons, Clipbrd;
 
 type
 
@@ -20,6 +20,7 @@ type
     Button4: TBitBtn;
     Button5: TBitBtn;
     CheckBox1: TToggleBox;
+    CheckBox2: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
     DataSource1: TDataSource;
@@ -66,6 +67,8 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure CheckBox1Click(Sender: TObject);
+    procedure CheckBox2Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
     procedure DBGrid1PrepareCanvas(sender: TObject; DataCol: Integer;
       Column: TColumn; AState: TGridDrawState);
     procedure Edit4KeyPress(Sender: TObject; var Key: char);
@@ -185,21 +188,99 @@ end;
 //добавление записи
 procedure TForm6.Button1Click(Sender: TObject);
 var n:integer;
+  //переменные для буфера обмена
+  ID_clipboard, Name_clipboard, s,s1,s2:string;
+    kol_clipboard, n1, kolonka,n2:integer;
+    dollar:Double;
 begin
-    for n := 1 to SpinEdit1.Value do
+     if CheckBox2.Checked=false then
+        begin
+             for n := 1 to SpinEdit1.Value do
+             begin
+                  SQLQuery1.Append;
+                  SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
+                  SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
+                  SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
+                  SQLQuery1.FieldByName('Код_товара').AsString:=edit2.Text;
+                  SQLQuery1.FieldByName('Наименование_расходника').AsString:=edit3.Text;
+                  SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
+                  SQLQuery1.FieldByName('Цена_уе').Asfloat:=StrToFloat(edit5.Text);
+                  SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit6.Text);
+                  SQLQuery1.FieldByName('Наличие').AsBoolean:=true;
+                  Sqlquery1.Post;// записываем данные
+                  sqlquery1.ApplyUpdates;// отправляем изменения в базу
+             end;
+             Edit2.SetFocus;
+        end
+    else  //преобразование данных из буфера обмена
     begin
-          SQLQuery1.Append;
-          SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
-          SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
-          SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
-          SQLQuery1.FieldByName('Код_товара').AsString:=edit2.Text;
-          SQLQuery1.FieldByName('Наименование_расходника').AsString:=edit3.Text;
-          SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
-          SQLQuery1.FieldByName('Цена_уе').Asfloat:=StrToFloat(edit5.Text);
-          SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit6.Text);
-          SQLQuery1.FieldByName('Наличие').AsBoolean:=true;
-          Sqlquery1.Post;// записываем данные
-          sqlquery1.ApplyUpdates;// отправляем изменения в базу
+         s:=Clipboard.AsText;
+         while pos(#10,s)>0 do //разбиваем на строки
+             begin
+                  kolonka:=0;
+                  n1:=pos(#10,s);
+                  s1:=copy(s,0,n1);
+                  while pos(#9,s1)>0 do     //вытаскиваем переменные
+                      begin
+                           inc(kolonka);
+                           n2:=pos(#9,s1);
+                           s2:=copy(s1,0,n2-1);
+                           case kolonka of
+                               1:ID_clipboard:=s2;
+                               2:Name_clipboard:=s2;
+                               3:kol_clipboard:=strtoint(s2);
+                               4:begin s2:=copy(s2,0,length(s2)-3)+','+copy(s2,length(s2)-1,2); dollar:=StrToFloat(s2);end;
+                           end;
+                           s1:=copy(s1,n2+1,length(s1)-n2);
+                      end;
+                  for n := 1 to kol_clipboard do
+                  begin
+                        SQLQuery1.Append;
+                        SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
+                        SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
+                        SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
+                        SQLQuery1.FieldByName('Код_товара').AsString:=ID_clipboard;
+                        SQLQuery1.FieldByName('Наименование_расходника').AsString:=Name_clipboard;
+                        SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
+                        SQLQuery1.FieldByName('Цена_уе').Asfloat:=dollar;
+                        SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit4.Text)*dollar;
+                        SQLQuery1.FieldByName('Наличие').AsBoolean:=true;
+                        Sqlquery1.Post;// записываем данные
+                        sqlquery1.ApplyUpdates;// отправляем изменения в базу
+                  end;
+                  s:=copy(s,n1+1,length(s)-n1);
+             end;
+          //последняя строка
+          kolonka:=0;
+          s1:=s;
+          while pos(#9,s1)>0 do     //вытаскиваем переменные
+              begin
+                   inc(kolonka);
+                   n2:=pos(#9,s1);
+                   s2:=copy(s1,0,n2-1);
+                   case kolonka of
+                       1:ID_clipboard:=s2;
+                       2:Name_clipboard:=s2;
+                       3:kol_clipboard:=strtoint(s2);
+                       4:begin s2:=copy(s2,0,length(s2)-3)+','+copy(s2,length(s2)-1,2); dollar:=StrToFloat(s2);end;
+                   end;
+                   s1:=copy(s1,n2+1,length(s1)-n2);
+              end;
+                  for n := 1 to kol_clipboard do
+                  begin
+                        SQLQuery1.Append;
+                        SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
+                        SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
+                        SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
+                        SQLQuery1.FieldByName('Код_товара').AsString:=ID_clipboard;
+                        SQLQuery1.FieldByName('Наименование_расходника').AsString:=Name_clipboard;
+                        SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
+                        SQLQuery1.FieldByName('Цена_уе').Asfloat:=dollar;
+                        SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit4.Text)*dollar;
+                        SQLQuery1.FieldByName('Наличие').AsBoolean:=true;
+                        Sqlquery1.Post;// записываем данные
+                        sqlquery1.ApplyUpdates;// отправляем изменения в базу
+                  end;
     end;
     form1.SQLTransaction1.Commit;
     SQLQuery1.Active:=false;
@@ -210,7 +291,6 @@ begin
     edit6.text:='0';
     SpinEdit1.Value:=1;
     button3.Enabled:=true;
-    Edit2.SetFocus;
     size_columns;
 end;
 
@@ -284,6 +364,24 @@ procedure TForm6.CheckBox1Click(Sender: TObject);
 begin
   //проверка включен ли фильтр
   if Form6.CheckBox1.Checked=false then form6.OnCreate(self) else find_sklad;
+end;
+//отключение лишних элементов для импорта из контекста Интеха
+procedure TForm6.CheckBox2Click(Sender: TObject);
+begin
+     if CheckBox2.Checked=true then
+        begin
+             edit2.Enabled:=false;edit3.Enabled:=false;edit5.Enabled:=false;edit6.Enabled:=false;
+             SpinEdit1.Enabled:=false;
+        end else
+        begin
+             edit2.Enabled:=true;edit3.Enabled:=true;edit5.Enabled:=true;edit6.Enabled:=true;
+             SpinEdit1.Enabled:=true;
+        end;
+end;
+//появление галочки "импорт из контекстного меню" для Интеха
+procedure TForm6.ComboBox1Change(Sender: TObject);
+begin
+     if ComboBox1.Items[ComboBox1.ItemIndex]='Интех' then CheckBox2.Visible:=true else CheckBox2.Visible:=false;
 end;
 
 end.

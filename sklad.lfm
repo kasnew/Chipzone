@@ -17,7 +17,7 @@ object Form6: TForm6
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poDesktopCenter
-  LCLVersion = '2.0.8.0'
+  LCLVersion = '2.0.10.0'
   WindowState = wsMaximized
   object GroupBox1: TGroupBox
     AnchorSideLeft.Control = Owner
@@ -106,6 +106,8 @@ object Form6: TForm6
         'ARC'
         'Другое'
       )
+      OnChange = ComboBox1Change
+      OnSelect = ComboBox1Change
       TabOrder = 1
       Text = 'Интех'
     end
@@ -160,6 +162,7 @@ object Form6: TForm6
     end
     object Edit3: TEdit
       AnchorSideLeft.Control = Label5
+      AnchorSideTop.Control = Edit1
       AnchorSideBottom.Control = ComboBox1
       AnchorSideBottom.Side = asrBottom
       Left = 368
@@ -549,6 +552,20 @@ object Form6: TForm6
       OnClick = Button2Click
       ParentFont = False
       TabOrder = 10
+    end
+    object CheckBox2: TCheckBox
+      AnchorSideLeft.Control = Button1
+      AnchorSideLeft.Side = asrBottom
+      AnchorSideTop.Control = Edit3
+      AnchorSideTop.Side = asrBottom
+      Left = 512
+      Height = 23
+      Top = 58
+      Width = 183
+      BorderSpacing.Top = 15
+      Caption = 'Импорт из Буфера обмена'
+      OnClick = CheckBox2Click
+      TabOrder = 11
     end
   end
   object GroupBox2: TGroupBox
@@ -1242,8 +1259,8 @@ object Form6: TForm6
   end
   object DataSource1: TDataSource
     DataSet = SQLQuery1
-    left = 86
-    top = 274
+    Left = 86
+    Top = 274
   end
   object SQLQuery1: TSQLQuery
     PacketRecords = -1
@@ -1344,7 +1361,7 @@ object Form6: TForm6
       'Select * from Расходники'
     )
     Params = <>
-    left = 176
-    top = 274
+    Left = 176
+    Top = 274
   end
 end

@@ -142,6 +142,7 @@ type
   public
     ID_remont,rec_pos,numberreport,predohranitel:integer;
     os,basename:string;
+
   end;
 
 var
@@ -156,6 +157,7 @@ var
   procedure size_columns;
   procedure rem_connect;
   procedure save_reserv;
+
 
 implementation
  uses newwork;
@@ -539,7 +541,7 @@ begin
      DateTimePicker4.Date:=date;
      DateTimePicker5.Date:=strtodate('01.01.2017');
      DateTimePicker6.Date:=date;
-
+     //задержка всплывающего номера телефона текущей позиции
      Application.HintHidePause:=100000;
 end;
 //активация кнопки "добавить" при открытии программы
@@ -779,7 +781,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.52.2          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.6          '+ TimeToStr(Time);
 end;
 
 end.
