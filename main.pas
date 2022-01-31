@@ -48,6 +48,7 @@ type
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
     GroupBox4: TGroupBox;
+    GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
     ImageList1: TImageList;
     Label1: TLabel;
@@ -71,6 +72,11 @@ type
     Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
+    LabeledEdit1: TLabeledEdit;
+    LabeledEdit2: TLabeledEdit;
+    LabeledEdit3: TLabeledEdit;
+    LabeledEdit4: TLabeledEdit;
+    LabeledEdit5: TLabeledEdit;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
@@ -104,6 +110,7 @@ type
     SQLite3Connection1: TSQLite3Connection;
     SQLQuery1: TSQLQuery;
     SQLQuery2: TSQLQuery;
+    SQLQuery3: TSQLQuery;
     SQLTransaction1: TSQLTransaction;
     Timer1: TTimer;
     procedure Button1Click(Sender: TObject);
@@ -153,6 +160,7 @@ var
   IniF:TINIFile;
   path_program,path_backups:string;
   procedure finstat;
+  procedure count_state;
   procedure find;
   procedure size_columns;
   procedure rem_connect;
@@ -203,17 +211,18 @@ begin
           Columns[2].Width:=0;//Описание неисправности
           Columns[3].Width:=0;//Выполненая работа
           Columns[4].Width:=70;//Квитанция
-          Columns[5].Width:=form1.Width-765;//Наименование техники
-          Columns[6].Width:=165;//Имя
+          Columns[5].Width:=form1.Width-750;//Наименование техники
+          Columns[6].Width:=100;//Имя
           Columns[7].Width:=90;//Телефон
           //Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
           Columns[8].Width:=110;//Начало ремонта
           Columns[9].Width:=100;//Конец ремонта
           Columns[10].Width:=50;//Сумма
           Columns[11].Width:=0;//Оплачено
-          Columns[12].Width:=160;//Примечание
+          Columns[12].Width:=175;//Примечание
           Columns[13].Width:=0;//Перезвонить
           Columns[14].Width:=0;//Доход
+          Columns[15].Width:=0;//Состояние
       end;
 end;
 //подключение к базе данных
@@ -223,7 +232,7 @@ begin
       form1.SQLite3Connection1.Connected:=false;
       form1.SQLite3Connection1.Connected:=true;
       form1.SQLQuery1.Sql.Clear;
-      form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить,Доход from Ремонт ORDER BY Начало_ремонта DESC, Квитанция DESC');
+      form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить, Доход, Состояние from Ремонт ORDER BY Начало_ремонта DESC, Квитанция DESC');
 
       form1.SQLQuery1.Active:=true;
       size_columns;
@@ -280,6 +289,39 @@ begin
           form1.edit12.Text:='0';
     end;
     form1.Edit13.Text:=FloatToStrf(strtofloat(form1.edit10.text)+strtofloat(form1.edit12.text),ffFixed,8,2);
+end;
+//подсчет состояний квитанций
+procedure count_state;
+begin
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=1');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit1.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
+
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=2');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit2.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
+
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=3');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit3.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
+
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=4');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit4.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
+
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=5');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit5.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
 end;
 //включение фильтров поиска
 procedure find;
@@ -385,9 +427,9 @@ begin
      checkbox3.Checked:=false;
      edit1.Text:='';edit2.Text:='';edit3.Text:='';edit4.Text:='';edit5.Text:='';edit6.Text:='';
      RadioButton1.Checked:=true;
-     DateTimePicker1.Date:=strtodate('01.01.2017');
+     DateTimePicker1.Date:=date;
      DateTimePicker2.Date:=date;
-     DateTimePicker3.Date:=strtodate('01.01.2017');
+     DateTimePicker3.Date:=date;
      DateTimePicker4.Date:=date;
 end;
 
@@ -531,15 +573,16 @@ begin
      SQLite3Connection1.DatabaseName:=basename;
      SQLite3Connection1.Connected:=true;
      rem_connect;
+     count_state;
      ID_remont:=1;//по умолчанию присвоим значение идентификатору выбраной записи
 
      //если записей нет, то деактивация кнопки "удалить"
      if SQLQuery1.RecordCount=0 then Button2.Enabled:=false;
-     DateTimePicker1.Date:=strtodate('01.01.2017');
+     DateTimePicker1.Date:=date;
      DateTimePicker2.Date:=date;
-     DateTimePicker3.Date:=strtodate('01.01.2017');
+     DateTimePicker3.Date:=date;
      DateTimePicker4.Date:=date;
-     DateTimePicker5.Date:=strtodate('01.01.2017');
+     DateTimePicker5.Date:=date;
      DateTimePicker6.Date:=date;
      //задержка всплывающего номера телефона текущей позиции
      Application.HintHidePause:=100000;
@@ -781,7 +824,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.6          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7          '+ TimeToStr(Time);
 end;
 
 end.

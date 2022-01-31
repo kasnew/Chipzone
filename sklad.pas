@@ -381,7 +381,12 @@ end;
 //появление галочки "импорт из контекстного меню" для Интеха
 procedure TForm6.ComboBox1Change(Sender: TObject);
 begin
-     if ComboBox1.Items[ComboBox1.ItemIndex]='Интех' then CheckBox2.Visible:=true else CheckBox2.Visible:=false;
+     if ComboBox1.Items[ComboBox1.ItemIndex]='Интех' then CheckBox2.Visible:=true else
+     begin
+          Checkbox2.Checked:=false;
+          CheckBox2Click(Self);
+          CheckBox2.Visible:=false;
+     end;
 end;
 
 end.

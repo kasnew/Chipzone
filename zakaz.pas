@@ -23,6 +23,7 @@ type
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
     ComboBox1: TComboBox;
+    ComboBox2: TComboBox;
     DataSource1: TDataSource;
     DataSource2: TDataSource;
     DateTimePicker1: TDateTimePicker;
@@ -207,6 +208,7 @@ begin
       DateTimePicker2.Date:=SQLQuery2.FieldByName('Конец_ремонта').AsDateTime;
       CheckBox2.Checked:=SQLQuery2.FieldByName('Оплачено').AsBoolean;
       CheckBox1.Checked:=SQLQuery2.FieldByName('Перезвонить').AsBoolean;
+      ComboBox2.ItemIndex:=SQLQuery2.FieldByName('Состояние').AsInteger;
       Button4.Enabled:=false;//добавить расходник
       Button1.Enabled:=false;//сохранить
       // подсчет суммы расходников
@@ -512,6 +514,8 @@ begin
           FieldByName('Перезвонить').AsBoolean:=CheckBox1.Checked;
           FieldByName('Примечание').Asstring:=memo2.Text;
           FieldByName('Доход').AsFloat:=strtofloat(edit10.Text);
+          if CheckBox2.Checked=true then ComboBox2.ItemIndex:=6;
+          FieldByName('Состояние').AsInteger:=ComboBox2.ItemIndex;
 
           UpdateRecord;
           Post;// записываем данные
@@ -525,6 +529,7 @@ begin
       form1.SQLQuery1.Active:=false;
       form1.SQLQuery1.Active:=true;
       reconnect_rashodniki;
+      count_state;
 
       finstat;
 end;
