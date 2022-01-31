@@ -529,7 +529,7 @@ begin
       form1.SQLQuery1.Active:=false;
       form1.SQLQuery1.Active:=true;
       reconnect_rashodniki;
-      count_state;
+      state_count;
 
       finstat;
 end;

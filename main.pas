@@ -82,6 +82,7 @@ type
     MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
     MenuItem12: TMenuItem;
+    MenuItem13: TMenuItem;
     MenuItem14: TMenuItem;
     MenuItem15: TMenuItem;
     MenuItem16: TMenuItem;
@@ -91,8 +92,14 @@ type
     MenuItem2: TMenuItem;
     MenuItem20: TMenuItem;
     MenuItem21: TMenuItem;
+    MenuItem22: TMenuItem;
     MenuItem23: TMenuItem;
+    MenuItem24: TMenuItem;
+    MenuItem25: TMenuItem;
+    MenuItem26: TMenuItem;
+    MenuItem27: TMenuItem;
     MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
@@ -121,6 +128,8 @@ type
     procedure CheckBox5Click(Sender: TObject);
     procedure DBGrid1CellClick();
     procedure DBGrid1DblClick(Sender: TObject);
+    procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word);
     procedure DBGrid1MouseDown(Sender: TObject; Button: TMouseButton);
     procedure DBGrid1PrepareCanvas(sender: TObject);
@@ -131,11 +140,18 @@ type
     procedure MenuItem10Click(Sender: TObject);
     procedure MenuItem11Click(Sender: TObject);
     procedure MenuItem12Click(Sender: TObject);
+    procedure MenuItem13Click(Sender: TObject);
     procedure MenuItem15Click(Sender: TObject);
     procedure MenuItem17Click(Sender: TObject);
     procedure MenuItem19Click(Sender: TObject);
     procedure MenuItem20Click(Sender: TObject);
+    procedure MenuItem22Click(Sender: TObject);
+    procedure MenuItem24Click(Sender: TObject);
+    procedure MenuItem25Click(Sender: TObject);
+    procedure MenuItem26Click(Sender: TObject);
+    procedure MenuItem27Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
     procedure MenuItem9Click(Sender: TObject);
@@ -160,7 +176,7 @@ var
   IniF:TINIFile;
   path_program,path_backups:string;
   procedure finstat;
-  procedure count_state;
+  procedure state_count;
   procedure find;
   procedure size_columns;
   procedure rem_connect;
@@ -211,7 +227,7 @@ begin
           Columns[2].Width:=0;//Описание неисправности
           Columns[3].Width:=0;//Выполненая работа
           Columns[4].Width:=70;//Квитанция
-          Columns[5].Width:=form1.Width-750;//Наименование техники
+          Columns[5].Width:=form1.Width-800;//Наименование техники
           Columns[6].Width:=100;//Имя
           Columns[7].Width:=90;//Телефон
           //Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
@@ -219,10 +235,10 @@ begin
           Columns[9].Width:=100;//Конец ремонта
           Columns[10].Width:=50;//Сумма
           Columns[11].Width:=0;//Оплачено
-          Columns[12].Width:=175;//Примечание
+          Columns[12].Width:=105;//Примечание
           Columns[13].Width:=0;//Перезвонить
           Columns[14].Width:=0;//Доход
-          Columns[15].Width:=0;//Состояние
+          Columns[15].Width:=120;//Состояние
       end;
 end;
 //подключение к базе данных
@@ -291,7 +307,7 @@ begin
     form1.Edit13.Text:=FloatToStrf(strtofloat(form1.edit10.text)+strtofloat(form1.edit12.text),ffFixed,8,2);
 end;
 //подсчет состояний квитанций
-procedure count_state;
+procedure state_count;
 begin
         form1.sqlQuery3.Active:=false;
         form1.sqlQuery3.SQL.Clear;
@@ -473,6 +489,26 @@ procedure TForm1.DBGrid1DblClick(Sender: TObject);
 begin
      Form2.ShowModal;
 end;
+//Подмена столбца "Состояние"
+procedure TForm1.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
+  DataCol: Integer; Column: TColumn; State: TGridDrawState);
+begin
+     begin
+     if Column.FieldName = 'Состояние' then
+     with DBGrid1.Canvas do
+     begin
+          case SQLQuery1.FieldByName('Состояние').Value of
+          0:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не выбрано'),Rect.Top+2,'Не выбрано');end;
+          1:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В очереди'),Rect.Top+2,'В очереди');end;
+          2:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В работе'),Rect.Top+2,'В работе');end;
+          3:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Ждем ответ/детали'),Rect.Top+2,'Ждем ответ/детали');end;
+          4:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Готов к выдаче'),Rect.Top+2,'Готов к выдаче');end;
+          5:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не дозвонились'),Rect.Top+2,'Не дозвонились');end;
+          6:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Выдано'),Rect.Top+2,'Выдано');end;
+          end;
+     end;
+end;
+end;
 
 //удаление квитанции кнопкой "Delete"
 procedure TForm1.DBGrid1KeyDown(Sender: TObject; var Key: Word);
@@ -573,7 +609,7 @@ begin
      SQLite3Connection1.DatabaseName:=basename;
      SQLite3Connection1.Connected:=true;
      rem_connect;
-     count_state;
+     state_count;
      ID_remont:=1;//по умолчанию присвоим значение идентификатору выбраной записи
 
      //если записей нет, то деактивация кнопки "удалить"
@@ -633,8 +669,24 @@ begin
      form1.frReport1.LoadFromFile('report_klient.lrf');
      form1.frReport1.ShowReport;
 end;
+//Контекстное меню "Состояние-Не выбрано"
+procedure TForm1.MenuItem13Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=0;
 
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
 
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
 
 //копирование квитанции по контексту, возврат
 procedure TForm1.MenuItem15Click(Sender: TObject);
@@ -724,12 +776,111 @@ begin
      CheckBox2.Checked:=true;
      CheckBox2.OnClick(Self);
 end;
+//Контекстное меню "Состояние-В очереди"
+procedure TForm1.MenuItem22Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=1;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
+
+//Контекстное меню "Состояние-Не выбрано"
+procedure TForm1.MenuItem24Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=2;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
+
+//Контекстное меню "Состояние-Не выбрано"
+procedure TForm1.MenuItem25Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=3;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
+
+//Контекстное меню "Состояние-Не выбрано"
+procedure TForm1.MenuItem27Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=5;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
+
+//Контекстное меню "Состояние-Не выбрано"
+procedure TForm1.MenuItem26Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=4;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
 
 //открытие склада
 procedure TForm1.MenuItem2Click(Sender: TObject);
 begin
      form1.Visible:=false;
      form6.ShowModal;
+end;
+
+procedure TForm1.MenuItem4Click(Sender: TObject);
+begin
+
 end;
 
 //распаковка резервной копии БД
