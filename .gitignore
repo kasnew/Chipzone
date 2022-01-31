@@ -4,6 +4,7 @@
 # Edit at https://www.gitignore.io/?templates=python,lazarus,archlinuxpackages
 ### 1.sqlite ###
 *.sqlite
+*.ini
 ### ArchLinuxPackages ###
 *.tar
 *.tar.*
