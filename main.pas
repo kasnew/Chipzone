@@ -23,6 +23,7 @@ type
     CheckBox2: TToggleBox;
     CheckBox3: TCheckBox;
     CheckBox5: TCheckBox;
+    ComboBox1: TComboBox;
     DataSource1: TDataSource;
     DateTimePicker1: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
@@ -54,6 +55,7 @@ type
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
+    Label12: TLabel;
     Label19: TLabel;
     Label2: TLabel;
     Label20: TLabel;
@@ -77,6 +79,7 @@ type
     LabeledEdit3: TLabeledEdit;
     LabeledEdit4: TLabeledEdit;
     LabeledEdit5: TLabeledEdit;
+    LabeledEdit6: TLabeledEdit;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
@@ -98,6 +101,7 @@ type
     MenuItem25: TMenuItem;
     MenuItem26: TMenuItem;
     MenuItem27: TMenuItem;
+    MenuItem28: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
@@ -126,6 +130,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure CheckBox2Click(Sender: TObject);
     procedure CheckBox5Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
     procedure DBGrid1CellClick();
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -150,6 +155,7 @@ type
     procedure MenuItem25Click(Sender: TObject);
     procedure MenuItem26Click(Sender: TObject);
     procedure MenuItem27Click(Sender: TObject);
+    procedure MenuItem28Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
@@ -338,6 +344,12 @@ begin
         form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=5');
         form1.sqlQuery3.Active:=true;
         form1.LabeledEdit5.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
+
+        form1.sqlQuery3.Active:=false;
+        form1.sqlQuery3.SQL.Clear;
+        form1.sqlQuery3.SQL.Add('SELECT COUNT(*) as count FROM Ремонт WHERE Состояние=7');
+        form1.sqlQuery3.Active:=true;
+        form1.LabeledEdit6.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
 end;
 //включение фильтров поиска
 procedure find;
@@ -348,10 +360,17 @@ begin
          //обманка - по сути вывод полного списка, к которому будем добавлять фильтры
            form1.SQLQuery1.Active:=false;
            form1.SQLQuery1.SQL.Clear;
-           form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить, Доход from Ремонт where ID>=0');
+           form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить, Доход, Состояние from Ремонт where ID>=0');
 
            //фильтр "возвраты", если включен, то остальные не нужны
            if form1.CheckBox1.checked=true then form1.SQLQuery1.SQL.add(' and Сумма<0') else
+           //фильтр "Состояние", если включен то остальные игнорируются
+           if form1.ComboBox1.ItemIndex>=0 then
+              begin
+                   form1.SQLQuery1.SQL.add(' and Состояние=:sost4');
+                   form1.SQLQuery1.Params.ParamByName('sost4').AsInteger:=form1.ComboBox1.ItemIndex;
+              end
+                   else
            //фильтр "перезвонить", если включен, то остальные фильтры не нужны
            if form1.checkbox3.Checked=true then
                 begin
@@ -393,8 +412,8 @@ begin
 
            form1.SQLQuery1.Active:=true;
 
-           size_columns;
            form1.GroupBox1.Caption:='Список техники ['+inttostr(form1.SQLQuery1.RecordCount)+']';
+           size_columns;
      end
 end;
 
@@ -447,6 +466,7 @@ begin
      DateTimePicker2.Date:=date;
      DateTimePicker3.Date:=date;
      DateTimePicker4.Date:=date;
+     ComboBox1.ItemIndex:=-1;
 end;
 
 //включение фильтра поиска
@@ -471,6 +491,14 @@ procedure TForm1.CheckBox5Click(Sender: TObject);
 begin
      finstat;
 end;
+//Автопоиск по Состоянию
+procedure TForm1.ComboBox1Change(Sender: TObject);
+begin
+     form1.CheckBox2.Checked:=true;
+     find;
+     GroupBox2.Color:=clGray;
+end;
+
 //получиние ID выбранной записи
 procedure TForm1.DBGrid1CellClick();
 var phone_str:string;
@@ -498,13 +526,14 @@ begin
      with DBGrid1.Canvas do
      begin
           case SQLQuery1.FieldByName('Состояние').Value of
-          0:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не выбрано'),Rect.Top+2,'Не выбрано');end;
-          1:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В очереди'),Rect.Top+2,'В очереди');end;
-          2:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В работе'),Rect.Top+2,'В работе');end;
-          3:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Ждем ответ/детали'),Rect.Top+2,'Ждем ответ/детали');end;
-          4:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Готов к выдаче'),Rect.Top+2,'Готов к выдаче');end;
-          5:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не дозвонились'),Rect.Top+2,'Не дозвонились');end;
-          6:begin Font.Color:=clRed;TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Выдано'),Rect.Top+2,'Выдано');end;
+          0:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('       '),Rect.Top+2,'       ');end;
+          1:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В очереди'),Rect.Top+2,'В очереди');end;
+          2:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В работе'),Rect.Top+2,'В работе');end;
+          3:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Ждем ответ/детали'),Rect.Top+2,'Ждем ответ/детали');end;
+          4:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Готов к выдаче'),Rect.Top+2,'Готов к выдаче');end;
+          5:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не дозвонились'),Rect.Top+2,'Не дозвонились');end;
+          6:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('       '),Rect.Top+2,'       ');end;
+          7:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Одесса'),Rect.Top+2,'Одесса');end;
           end;
      end;
 end;
@@ -711,6 +740,7 @@ begin
           FieldByName('Оплачено').AsBoolean:=false;
           FieldByName('Перезвонить').AsBoolean:=false;
           FieldByName('Выполнено').AsString:='Принято в '+TimeToStr(Now);
+          FieldByName('Состояние').AsInteger:=1;
 
           if ((Sender as TMenuItem).Caption='Имя+телефон+техника')or((Sender as TMenuItem).Caption='Возврат') then
           FieldByName('Наименование_техники').AsString:=tech;
@@ -852,6 +882,25 @@ begin
      SQLQuery1.RecNo:=rec_pos;
 end;
 
+//Контекстное меню "Состояние-Одесса"
+procedure TForm1.MenuItem28Click(Sender: TObject);
+begin
+     SQLQuery1.Edit;
+     sqlQuery1.FieldByName('Состояние').AsInteger:=7;
+
+     sqlQuery1.UpdateRecord;
+     Sqlquery1.Post;// записываем данные
+     sqlquery1.ApplyUpdates;// отправляем изменения в базу
+     SQLTransaction1.Commit;
+
+     form1.FormCreate(Self);
+
+     if form1.CheckBox2.Checked=true then find;
+     if form1.CheckBox5.Checked=true then finstat;
+
+     SQLQuery1.RecNo:=rec_pos;
+end;
+
 //Контекстное меню "Состояние-Не выбрано"
 procedure TForm1.MenuItem26Click(Sender: TObject);
 begin
@@ -927,6 +976,7 @@ begin
           SQLQuery1.Edit;
           sqlQuery1.FieldByName('Оплачено').AsBoolean:=true;
           sqlQuery1.FieldByName('Конец_ремонта').AsDateTime:=Date;
+          SQLQuery1.FieldByName('Состояние').AsInteger:=6;
 
           sqlQuery1.UpdateRecord;
           Sqlquery1.Post;// записываем данные
