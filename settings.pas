@@ -25,16 +25,13 @@ type
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
     OpenDialog1: TOpenDialog;
-    SpinEdit1: TSpinEdit;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure CheckBox2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure SpinEdit1Change(Sender: TObject);
   private
 
   public
@@ -56,8 +53,6 @@ begin
      Inif := TINIFile.Create(extractfilepath(paramstr(0))+'settings.ini');
 
      checkbox1.Checked:=StrToBool(inif.ReadString('updates','checking',''));
-
-     SpinEdit1.Value:=koef_heith;
 
      checkbox2.Checked:=StrToBool(inif.ReadString('base','parrentfolder',''));
      if CheckBox2.Checked=true then edit2.Text:=ExtractFilePath(ParamStr(0))+'1.sqlite';
@@ -98,12 +93,6 @@ begin
      Button3.Caption:=Button3.Caption+IntToStr(FindAllFiles(path_backups,'*.*',false).Count)+' файла(-ов)';
 end;
 
-procedure TForm3.SpinEdit1Change(Sender: TObject);
-begin
-     form1.Height:=MaxRect.Height-SpinEdit1.Value;
-     koef_heith:=SpinEdit1.Value;
-end;
-
 procedure TForm3.Button2Click(Sender: TObject);
 begin
      OpenDialog1.Execute;
@@ -133,7 +122,6 @@ begin
      inif.WriteBool('Base','parrentfolder',CheckBox2.Checked);
      inif.WriteString('base','folder',edit2.Text);
      inif.WriteString('base','lastOS',form1.os);
-     inif.WriteString('base','koef_height',inttostr(SpinEdit1.Value));
      inif.Free;
      ShowMessage('Настройки сохранены!');
      close;

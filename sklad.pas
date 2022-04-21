@@ -311,7 +311,7 @@ begin
       SQLQuery1.Active:=true;
       size_columns;
       if SQLQuery1.RecordCount=0 then button3.Enabled:=false else button3.Enabled:=true;
-      SetBounds(0, NewTop, Width, NewHeight-koef_heith);
+      //SetBounds(0, NewTop, Width, NewHeight-koef_heith);
 end;
 
 procedure TForm6.FormShow(Sender: TObject);

@@ -1,7 +1,7 @@
 object Form3: TForm3
-  Left = 949
+  Left = 266
   Height = 278
-  Top = 397
+  Top = 286
   Width = 598
   Caption = 'Настройки'
   ClientHeight = 278
@@ -9,7 +9,7 @@ object Form3: TForm3
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.2.0.4'
   object GroupBox1: TGroupBox
     AnchorSideLeft.Control = Owner
     AnchorSideTop.Control = Owner
@@ -32,7 +32,6 @@ object Form3: TForm3
       Top = 19
       Width = 212
       Caption = 'Ссылка на файл проверка "version.txt"'
-      ParentColor = False
     end
     object Edit1: TEdit
       AnchorSideLeft.Control = Label1
@@ -92,7 +91,6 @@ object Form3: TForm3
       Width = 108
       BorderSpacing.Left = 5
       Caption = 'Путь к базе данных:'
-      ParentColor = False
     end
     object Button2: TButton
       AnchorSideLeft.Control = Edit2
@@ -132,7 +130,6 @@ object Form3: TForm3
       Top = 46
       Width = 1
       Font.Color = clGrayText
-      ParentColor = False
       ParentFont = False
     end
     object Button3: TBitBtn
@@ -234,35 +231,6 @@ object Form3: TForm3
     }
     OnClick = Button1Click
     TabOrder = 2
-  end
-  object SpinEdit1: TSpinEdit
-    AnchorSideLeft.Control = Label4
-    AnchorSideLeft.Side = asrBottom
-    AnchorSideTop.Control = Button1
-    AnchorSideRight.Control = Button1
-    AnchorSideBottom.Control = Label4
-    AnchorSideBottom.Side = asrBottom
-    Left = 246
-    Height = 23
-    Top = 221
-    Width = 67
-    BorderSpacing.Left = 5
-    Increment = 2
-    MaxValue = 1000
-    OnChange = SpinEdit1Change
-    TabOrder = 3
-  end
-  object Label4: TLabel
-    AnchorSideLeft.Control = GroupBox2
-    AnchorSideTop.Control = GroupBox2
-    AnchorSideTop.Side = asrBottom
-    Left = 5
-    Height = 15
-    Top = 226
-    Width = 236
-    BorderSpacing.Top = 10
-    Caption = 'Корректировка размера форм, в пикселях:'
-    ParentColor = False
   end
   object OpenDialog1: TOpenDialog
     Title = 'Выберите файл базы данных'

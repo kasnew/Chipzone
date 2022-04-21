@@ -216,7 +216,7 @@ begin
       sqlQuery3.SQL.Clear;
       sqlQuery3.SQL.Add('Select sum(Сумма),sum(Доход) from Расходники where Квитанция='+inttostr(form1.ID_remont));
       sqlQuery3.Active:=true;
-      sqlQuery3.ExecSQL;
+//      sqlQuery3.ExecSQL;
       Edit8.Text:=Edit4.Text;
       if sqlQuery3.Fields[0].Value<>null then
       begin
@@ -233,6 +233,7 @@ begin
 
       ComboBox1Change(Self);
       Memo4.SetFocus;
+
 end;
 
 //выбор контрагента
@@ -337,7 +338,7 @@ end;
 
 procedure TForm2.FormCreate(Sender: TObject);
 begin
-     SetBounds(0, NewTop, Width, NewHeight-koef_heith);
+     //SetBounds(0, NewTop, Width, NewHeight-koef_heith);
 end;
 
 //кнопка "закрыть"

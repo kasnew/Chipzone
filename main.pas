@@ -596,7 +596,7 @@ begin
           if oldOS=os then begin
                                 basename:=inif.ReadString('base','folder','');
                                 autoupdate:=StrToBool(inif.ReadString('updates','checking',''));
-                                koef_heith:=StrToInt(inif.ReadString('base','koef_height',''));
+                                //koef_heith:=StrToInt(inif.ReadString('base','koef_height',''));
                            end
           else
               begin
@@ -604,7 +604,7 @@ begin
                     inif.WriteBool('Base','parrentfolder',true);
                     inif.WriteString('base','folder',path_program+'1.sqlite');
                     inif.WriteString('base','lastOS',form1.os);
-                    inif.WriteString('base','koef_height','0');
+                    //inif.WriteString('base','koef_height','0');
                     showmessage('Внимание, первый запуск в новой ОС! Выбран путь к базе по умолчанию!');
               end;
           inif.Free;
@@ -615,7 +615,7 @@ begin
                inif.WriteString('base','folder',path_program+'1.sqlite');
                inif.WriteString('base','lastOS',form1.os);
                inif.WriteBool('Updates','checking',false);
-               inif.WriteString('base','koef_height','0');
+               //inif.WriteString('base','koef_height','0');
                inif.Free;
                basename:=path_program + '1.sqlite';
                ShowMessage('Файл настроек не найден, настройки сброшены по умолчанию');
@@ -624,12 +624,12 @@ begin
        //считывание разрешения экрана и установка размера формы
      if not trigger_form then
          begin
-              MaxRect := Monitor.WorkareaRect;
-              NewHeight := MaxRect.Height;
+              //MaxRect := Monitor.WorkareaRect;
+              //NewHeight := MaxRect.Height;
               //NewTop := MaxRect.Width;
 
-              SetBounds(0, NewTop, Width, NewHeight-koef_heith);
-              trigger_form:=true;
+              //SetBounds(0, NewTop, Width, NewHeight-koef_heith);
+              //trigger_form:=true;
          end;
 //     ShowMessage(inttostr(Left));
      predohranitel:=0;
@@ -655,6 +655,7 @@ end;
 //активация кнопки "добавить" при открытии программы
 procedure TForm1.FormShow(Sender: TObject);
 begin
+     size_columns;
      Button1.SetFocus;
 end;
 
