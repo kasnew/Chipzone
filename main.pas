@@ -225,7 +225,7 @@ end;
 //размер колонок таблицы
 procedure size_columns;
 begin
-      with form1.DBGrid1 do
+     with form1.DBGrid1 do
       begin
           Width:=form1.Width;
           Columns[0].Width:=0;//ID
@@ -251,8 +251,8 @@ end;
 procedure rem_connect;
 begin
       form1.SQLQuery1.Active:=false;
-      form1.SQLite3Connection1.Connected:=false;
-      form1.SQLite3Connection1.Connected:=true;
+//      form1.SQLite3Connection1.Connected:=false;
+//      form1.SQLite3Connection1.Connected:=true;
       form1.SQLQuery1.Sql.Clear;
       form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить, Доход, Состояние from Ремонт ORDER BY Начало_ремонта DESC, Квитанция DESC');
 
@@ -412,9 +412,13 @@ begin
 
            form1.SQLQuery1.Active:=true;
 
+           if form1.SQLQuery1.RecordCount=0 then begin
+                                                      rem_connect;
+                                                 end else
            form1.GroupBox1.Caption:='Список техники ['+inttostr(form1.SQLQuery1.RecordCount)+']';
+
            size_columns;
-     end
+     end;
 end;
 
 //кнопка "выход"
