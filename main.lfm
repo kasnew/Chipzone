@@ -74,7 +74,6 @@ object Form1: TForm1
       Top = 2
       Width = 131
       Caption = 'Позвонить клиенту'
-      OnClick = CheckBox2Click
       TabOrder = 0
     end
     object Label1: TLabel
@@ -432,7 +431,6 @@ object Form1: TForm1
       Top = 0
       Width = 78
       Caption = 'Включить'
-      OnChange = CheckBox2Click
       OnClick = CheckBox2Click
       TabOrder = 11
     end
@@ -499,7 +497,6 @@ object Form1: TForm1
       Anchors = [akTop, akLeft, akBottom]
       BorderSpacing.Left = 15
       Caption = 'Возвраты'
-      OnClick = CheckBox2Click
       TabOrder = 13
     end
     object ComboBox1: TComboBox

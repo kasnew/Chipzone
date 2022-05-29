@@ -178,11 +178,6 @@ procedure TForm2.FormShow(Sender: TObject);
 begin
       //скрытие главной формы
       form1.Visible:=false;
-      Memo1.Clear;
-      Memo2.Clear;
-      Memo3.Clear;
-      Memo4.Clear;
-      //edit13.Clear;
 
       reconnect_rashodniki;
 
@@ -239,6 +234,8 @@ end;
 //выбор контрагента
 procedure TForm2.ComboBox1Change(Sender: TObject);
 begin
+     edit7.text:='0';
+     edit5.clear;
      if (ComboBox1.Items[ComboBox1.ItemIndex]<>'ЧипЗона') and (ComboBox1.Items[ComboBox1.ItemIndex]<>'Услуга')
      then
                 begin
@@ -249,8 +246,10 @@ begin
                       sqlQuery4.Active:=true;
                       DBLookupComboBox1.Visible:=true;
                       edit5.Visible:=false;
+                      edit13.Visible:=true;
+                      label19.Visible:=true;
                 end
-      else begin DBLookupComboBox1.Visible:=false;edit5.Visible:=true;end;
+      else begin DBLookupComboBox1.Visible:=false;edit5.Visible:=true;edit13.Visible:=false;label19.Visible:=false;end;
 end;
 //заливка таблицы
 procedure TForm2.DBGrid1PrepareCanvas(sender: TObject);

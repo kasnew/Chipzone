@@ -236,7 +236,7 @@ begin
           Columns[5].Width:=form1.Width-800;//Наименование техники
           Columns[6].Width:=100;//Имя
           Columns[7].Width:=90;//Телефон
-          //Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
+         // Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
           Columns[8].Width:=110;//Начало ремонта
           Columns[9].Width:=100;//Конец ремонта
           Columns[10].Width:=50;//Сумма
@@ -250,6 +250,7 @@ end;
 //подключение к базе данных
 procedure rem_connect;
 begin
+    // showmessage('Ok');
       form1.SQLQuery1.Active:=false;
 //      form1.SQLite3Connection1.Connected:=false;
 //      form1.SQLite3Connection1.Connected:=true;
@@ -526,6 +527,7 @@ procedure TForm1.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
 begin
      begin
+//          if Field.Name = 'Телефон' then TFloatField(Field):='###,###, ##, ##000-000-00-00';
      if Column.FieldName = 'Состояние' then
      with DBGrid1.Canvas do
      begin
@@ -670,7 +672,7 @@ begin
      SQLQuery2.sql.Clear;
      SQLQuery2.SQL.Add('Select * from Ремонт where Оплачено=:sost');
      SQLQuery2.ParamByName('sost').AsBoolean:=true;
-     SQLQuery2.SQL.Add(' and (Конец_ремонта>=:date3 and Конец_ремонта<=:date4)');
+     SQLQuery2.SQL.Add(' and (Конец_ремонта>=:date3 and Конец_ремонта<=:date4) and Сумма>0');
      SQLQuery2.ParamByName('date3').AsDate:=form1.DateTimePicker3.Date;
      SQLQuery2.ParamByName('date4').AsDate:=form1.DateTimePicker4.Date;
      SQLQuery2.SQL.add(' ORDER BY Конец_ремонта, Квитанция');
@@ -1030,7 +1032,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.8          '+ TimeToStr(Time);
 end;
 
 end.

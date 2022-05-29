@@ -35,7 +35,7 @@ object Form2: TForm2
     TabOrder = 0
     object Label1: TLabel
       Left = 16
-      Height = 23
+      Height = 22
       Top = 16
       Width = 174
       Caption = 'Номер квитанции:'
@@ -46,9 +46,9 @@ object Form2: TForm2
     end
     object Label2: TLabel
       Left = 16
-      Height = 23
+      Height = 22
       Top = 44
-      Width = 158
+      Width = 161
       Caption = 'Начало ремонта:'
       Font.Height = -19
       Font.Name = 'Arial'
@@ -61,9 +61,9 @@ object Form2: TForm2
       AnchorSideBottom.Control = Label2
       AnchorSideBottom.Side = asrBottom
       Left = 287
-      Height = 23
+      Height = 22
       Top = 44
-      Width = 147
+      Width = 149
       Anchors = [akTop, akLeft, akBottom]
       Caption = 'Конец ремонта:'
       Font.Height = -19
@@ -75,9 +75,9 @@ object Form2: TForm2
       AnchorSideLeft.Control = Edit1
       AnchorSideLeft.Side = asrBottom
       Left = 287
-      Height = 23
+      Height = 22
       Top = 16
-      Width = 143
+      Width = 142
       BorderSpacing.Left = 10
       Caption = 'Имя заказчика:'
       Font.Height = -19
@@ -93,7 +93,7 @@ object Form2: TForm2
       AnchorSideBottom.Control = Label2
       AnchorSideBottom.Side = asrBottom
       Left = 190
-      Height = 23
+      Height = 22
       Top = 44
       Width = 87
       CenturyFrom = 1941
@@ -121,8 +121,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Label3
       AnchorSideBottom.Control = Label3
       AnchorSideBottom.Side = asrBottom
-      Left = 434
-      Height = 23
+      Left = 436
+      Height = 22
       Top = 44
       Width = 87
       CenturyFrom = 1941
@@ -151,7 +151,7 @@ object Form2: TForm2
       AnchorSideBottom.Control = Label1
       AnchorSideBottom.Side = asrBottom
       Left = 190
-      Height = 23
+      Height = 22
       Top = 16
       Width = 87
       Anchors = [akTop, akLeft, akBottom]
@@ -164,10 +164,10 @@ object Form2: TForm2
     object Label5: TLabel
       AnchorSideLeft.Control = Edit2
       AnchorSideLeft.Side = asrBottom
-      Left = 628
-      Height = 23
+      Left = 630
+      Height = 22
       Top = 16
-      Width = 124
+      Width = 127
       BorderSpacing.Left = 10
       Caption = '№ телефона:'
       Font.Height = -19
@@ -180,8 +180,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Label4
       AnchorSideBottom.Control = Label4
       AnchorSideBottom.Side = asrBottom
-      Left = 434
-      Height = 23
+      Left = 436
+      Height = 22
       Top = 16
       Width = 184
       Anchors = [akTop, akLeft, akBottom]
@@ -194,8 +194,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Label5
       AnchorSideBottom.Control = Label5
       AnchorSideBottom.Side = asrBottom
-      Left = 752
-      Height = 23
+      Left = 757
+      Height = 22
       Top = 16
       Width = 40
       Anchors = [akTop, akLeft, akBottom]
@@ -210,8 +210,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Edit12
       AnchorSideBottom.Control = Edit12
       AnchorSideBottom.Side = asrBottom
-      Left = 792
-      Height = 23
+      Left = 797
+      Height = 22
       Top = 16
       Width = 98
       Anchors = [akTop, akLeft, akBottom]
@@ -330,21 +330,21 @@ object Form2: TForm2
     BorderSpacing.Right = 5
     BorderSpacing.Bottom = 5
     Caption = 'Информация о технике:'
-    ClientHeight = 181
+    ClientHeight = 177
     ClientWidth = 1006
     TabOrder = 1
     object Label6: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 0
-      Width = 142
+      Width = 138
       Caption = 'Наименование техники:'
     end
     object Label7: TLabel
       Left = 8
-      Height = 14
+      Height = 15
       Top = 72
-      Width = 78
+      Width = 76
       Caption = 'Примечание:'
     end
     object Memo1: TMemo
@@ -352,9 +352,6 @@ object Form2: TForm2
       Height = 56
       Top = 16
       Width = 208
-      Lines.Strings = (
-        'Memo1'
-      )
       OnChange = Edit1Change
       ScrollBars = ssVertical
       TabOrder = 0
@@ -364,40 +361,34 @@ object Form2: TForm2
       Height = 56
       Top = 88
       Width = 208
-      Lines.Strings = (
-        'Memo2'
-      )
       OnChange = Edit1Change
       ScrollBars = ssVertical
       TabOrder = 1
     end
     object Label8: TLabel
       Left = 224
-      Height = 14
+      Height = 15
       Top = 0
-      Width = 155
+      Width = 153
       Caption = 'Описание неисправности:'
     end
     object Memo3: TMemo
       AnchorSideBottom.Control = GroupBox1
       AnchorSideBottom.Side = asrBottom
       Left = 224
-      Height = 165
+      Height = 161
       Top = 16
       Width = 168
       Anchors = [akTop, akLeft, akBottom]
-      Lines.Strings = (
-        'Memo3'
-      )
       OnChange = Edit1Change
       ScrollBars = ssVertical
       TabOrder = 2
     end
     object Label9: TLabel
       Left = 400
-      Height = 14
+      Height = 15
       Top = 0
-      Width = 192
+      Width = 191
       Caption = 'Описание выполненной работы:'
     end
     object Memo4: TMemo
@@ -405,14 +396,11 @@ object Form2: TForm2
       AnchorSideBottom.Control = GroupBox1
       AnchorSideBottom.Side = asrBottom
       Left = 400
-      Height = 165
+      Height = 161
       Top = 16
-      Width = 470
+      Width = 476
       Anchors = [akTop, akLeft, akRight, akBottom]
       BorderSpacing.Right = 10
-      Lines.Strings = (
-        'Memo4'
-      )
       OnChange = Edit1Change
       ScrollBars = ssVertical
       TabOrder = 3
@@ -421,10 +409,10 @@ object Form2: TForm2
       AnchorSideRight.Control = GroupBox1
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = Edit4
-      Left = 880
-      Height = 14
-      Top = 143
-      Width = 116
+      Left = 886
+      Height = 15
+      Top = 137
+      Width = 110
       Anchors = [akRight, akBottom]
       BorderSpacing.Right = 10
       Caption = 'Стоимость работы:'
@@ -437,9 +425,9 @@ object Form2: TForm2
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = GroupBox1
       AnchorSideBottom.Side = asrBottom
-      Left = 880
-      Height = 22
-      Top = 157
+      Left = 886
+      Height = 23
+      Top = 152
       Width = 115
       Anchors = [akLeft, akBottom]
       BorderSpacing.Bottom = 2
@@ -452,10 +440,10 @@ object Form2: TForm2
       AnchorSideLeft.Control = Label10
       AnchorSideRight.Control = GroupBox1
       AnchorSideRight.Side = asrBottom
-      Left = 880
+      Left = 886
       Height = 23
-      Top = 21
-      Width = 111
+      Top = 20
+      Width = 108
       Anchors = [akLeft]
       Caption = 'Позвонить'
       Font.Height = -16
@@ -469,10 +457,10 @@ object Form2: TForm2
       AnchorSideLeft.Control = Label10
       AnchorSideRight.Control = GroupBox1
       AnchorSideRight.Side = asrBottom
-      Left = 880
+      Left = 886
       Height = 23
-      Top = 60
-      Width = 102
+      Top = 58
+      Width = 99
       Anchors = [akLeft]
       Caption = 'Оплачено'
       Font.Height = -16
@@ -490,7 +478,7 @@ object Form2: TForm2
       AnchorSideRight.Control = Memo2
       AnchorSideRight.Side = asrBottom
       Left = 8
-      Height = 29
+      Height = 27
       Top = 149
       Width = 208
       Anchors = [akTop, akLeft, akRight]
@@ -499,7 +487,7 @@ object Form2: TForm2
       Font.Height = -16
       Font.Name = 'Arial'
       Font.Style = [fsBold]
-      ItemHeight = 0
+      ItemHeight = 19
       ItemIndex = 0
       Items.Strings = (
         'Не выбрано'
@@ -534,7 +522,7 @@ object Form2: TForm2
     BorderSpacing.Right = 5
     BorderSpacing.Bottom = 5
     Caption = 'Расходные материалы:'
-    ClientHeight = 200
+    ClientHeight = 196
     ClientWidth = 1006
     TabOrder = 2
     object DBGrid1: TDBGrid
@@ -542,7 +530,7 @@ object Form2: TForm2
       AnchorSideTop.Side = asrBottom
       AnchorSideBottom.Control = Button4
       Left = 5
-      Height = 126
+      Height = 122
       Top = 5
       Width = 1001
       Anchors = [akTop, akLeft, akRight, akBottom]
@@ -564,9 +552,9 @@ object Form2: TForm2
       AnchorSideTop.Control = DBGrid1
       AnchorSideTop.Side = asrBottom
       Left = 7
-      Height = 14
-      Top = 136
-      Width = 70
+      Height = 15
+      Top = 132
+      Width = 67
       Caption = 'Поставщик:'
     end
     object ComboBox1: TComboBox
@@ -577,11 +565,11 @@ object Form2: TForm2
       AnchorSideBottom.Control = GroupBox2
       AnchorSideBottom.Side = asrBottom
       Left = 7
-      Height = 25
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 95
       BorderSpacing.Bottom = 5
-      ItemHeight = 0
+      ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
         'ЧипЗона'
@@ -599,9 +587,9 @@ object Form2: TForm2
       AnchorSideTop.Control = DBGrid1
       AnchorSideTop.Side = asrBottom
       Left = 112
-      Height = 14
-      Top = 136
-      Width = 164
+      Height = 15
+      Top = 132
+      Width = 162
       Caption = 'Наименование расходника:'
     end
     object Edit5: TEdit
@@ -610,8 +598,8 @@ object Form2: TForm2
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Edit6
       Left = 112
-      Height = 22
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 486
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Right = 100
@@ -623,8 +611,8 @@ object Form2: TForm2
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Edit6
       Left = 112
-      Height = 25
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 486
       Anchors = [akTop, akLeft, akRight]
       BorderSpacing.Right = 100
@@ -641,9 +629,9 @@ object Form2: TForm2
       AnchorSideTop.Control = DBGrid1
       AnchorSideTop.Side = asrBottom
       Left = 698
-      Height = 14
-      Top = 136
-      Width = 34
+      Height = 15
+      Top = 132
+      Width = 33
       Caption = 'Цена:'
     end
     object Label14: TLabel
@@ -651,9 +639,9 @@ object Form2: TForm2
       AnchorSideTop.Control = DBGrid1
       AnchorSideTop.Side = asrBottom
       Left = 772
-      Height = 14
-      Top = 136
-      Width = 34
+      Height = 15
+      Top = 132
+      Width = 33
       Caption = 'Вход:'
     end
     object Edit6: TEdit
@@ -661,8 +649,8 @@ object Form2: TForm2
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Edit7
       Left = 698
-      Height = 22
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 64
       Anchors = [akTop, akRight]
       BorderSpacing.Right = 10
@@ -675,8 +663,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Label12
       AnchorSideTop.Side = asrBottom
       Left = 772
-      Height = 22
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 64
       Anchors = [akTop, akRight]
       BorderSpacing.Right = 10
@@ -690,7 +678,7 @@ object Form2: TForm2
       AnchorSideRight.Side = asrBottom
       Left = 846
       Height = 32
-      Top = 136
+      Top = 132
       Width = 160
       Anchors = [akRight, akBottom]
       Caption = 'Добавить расходник'
@@ -740,7 +728,7 @@ object Form2: TForm2
       AnchorSideBottom.Side = asrBottom
       Left = 846
       Height = 32
-      Top = 168
+      Top = 164
       Width = 160
       Anchors = [akRight, akBottom]
       Caption = 'Удалить расходник'
@@ -790,8 +778,8 @@ object Form2: TForm2
       AnchorSideTop.Side = asrBottom
       AnchorSideRight.Control = Edit6
       Left = 612
-      Height = 22
-      Top = 150
+      Height = 23
+      Top = 147
       Width = 76
       Anchors = [akTop, akRight]
       BorderSpacing.Right = 10
@@ -805,9 +793,9 @@ object Form2: TForm2
       AnchorSideTop.Control = DBGrid1
       AnchorSideTop.Side = asrBottom
       Left = 612
-      Height = 14
-      Top = 136
-      Width = 52
+      Height = 15
+      Top = 132
+      Width = 51
       Caption = ' Приход:'
     end
   end
@@ -818,7 +806,7 @@ object Form2: TForm2
     Width = 561
     Anchors = [akRight, akBottom]
     Caption = 'Суммы:'
-    ClientHeight = 96
+    ClientHeight = 92
     ClientWidth = 557
     TabOrder = 3
     object Label15: TLabel
@@ -828,8 +816,8 @@ object Form2: TForm2
       AnchorSideBottom.Side = asrBottom
       Left = 5
       Height = 19
-      Top = 4
-      Width = 136
+      Top = 5
+      Width = 137
       Anchors = [akLeft, akBottom]
       BorderSpacing.Left = 5
       Caption = 'Итого по работе:'
@@ -844,8 +832,8 @@ object Form2: TForm2
       AnchorSideBottom.Side = asrBottom
       Left = 5
       Height = 19
-      Top = 26
-      Width = 185
+      Top = 28
+      Width = 186
       Anchors = [akLeft, akBottom]
       Caption = 'Итого по расходникам:'
       Font.Height = -16
@@ -856,7 +844,7 @@ object Form2: TForm2
     object Edit8: TEdit
       AnchorSideTop.Control = GroupBox3
       Left = 199
-      Height = 22
+      Height = 23
       Top = 1
       Width = 72
       Anchors = [akTop]
@@ -868,8 +856,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Edit8
       AnchorSideTop.Side = asrBottom
       Left = 199
-      Height = 22
-      Top = 23
+      Height = 23
+      Top = 24
       Width = 72
       Anchors = [akTop]
       ReadOnly = True
@@ -881,8 +869,8 @@ object Form2: TForm2
       AnchorSideBottom.Side = asrBottom
       Left = 5
       Height = 19
-      Top = 49
-      Width = 187
+      Top = 52
+      Width = 189
       Anchors = [akLeft, akBottom]
       Caption = 'Доход по расходникам:'
       Font.Height = -16
@@ -895,8 +883,8 @@ object Form2: TForm2
       AnchorSideTop.Control = Edit9
       AnchorSideTop.Side = asrBottom
       Left = 199
-      Height = 22
-      Top = 46
+      Height = 23
+      Top = 48
       Width = 72
       Anchors = [akTop]
       BorderSpacing.Top = 1
@@ -908,10 +896,10 @@ object Form2: TForm2
       AnchorSideRight.Control = Edit11
       AnchorSideBottom.Control = GroupBox3
       AnchorSideBottom.Side = asrBottom
-      Left = 332
-      Height = 28
-      Top = 53
-      Width = 112
+      Left = 333
+      Height = 29
+      Top = 48
+      Width = 111
       Anchors = [akRight, akBottom]
       BorderSpacing.Right = 2
       BorderSpacing.Bottom = 15
@@ -927,8 +915,8 @@ object Form2: TForm2
       AnchorSideBottom.Control = Label18
       AnchorSideBottom.Side = asrBottom
       Left = 446
-      Height = 31
-      Top = 50
+      Height = 30
+      Top = 47
       Width = 106
       Anchors = [akRight, akBottom]
       BorderSpacing.Right = 5
@@ -944,10 +932,10 @@ object Form2: TForm2
       AnchorSideTop.Control = GroupBox3
       AnchorSideRight.Control = Edit11
       AnchorSideRight.Side = asrBottom
-      Left = 332
+      Left = 333
       Height = 23
       Top = 3
-      Width = 105
+      Width = 102
       BorderSpacing.Top = 3
       Caption = 'Подробно'
       Font.Height = -16
