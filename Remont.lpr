@@ -8,7 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, main, datetimectrls, zakaz, settings, newwork,
-  sklad, lazmouseandkeyinput;
+  sklad, lazmouseandkeyinput, lazdbexport;
 
 {$R *.res}
 

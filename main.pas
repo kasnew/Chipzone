@@ -5,10 +5,10 @@ unit main;
 interface
 
 uses
-  Classes, SysUtils, sqldb, db, mssqlconn, sqlite3conn, FileUtil,
+  Classes, SysUtils, sqldb, db, fpcsvexport, mssqlconn, sqlite3conn, FileUtil,
   DateTimePicker, LR_DBSet, LR_Class, Forms, Controls, Graphics, Dialogs,
   StdCtrls, Menus, DBGrids, MaskEdit, Zakaz, Sklad, zlibar, Grids, Buttons,
-  ExtCtrls, ComCtrls, Types, MouseAndKeyInput, Ipfilebroker, IniFiles, settings;
+  ExtCtrls, ComCtrls, Types, MouseAndKeyInput, Ipfilebroker, IniFiles, settings, fpDBExport;
 
 type
 
@@ -24,6 +24,7 @@ type
     CheckBox3: TCheckBox;
     CheckBox5: TCheckBox;
     ComboBox1: TComboBox;
+    CSVExporter1: TCSVExporter;
     DataSource1: TDataSource;
     DateTimePicker1: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
@@ -102,6 +103,7 @@ type
     MenuItem26: TMenuItem;
     MenuItem27: TMenuItem;
     MenuItem28: TMenuItem;
+    MenuItem29: TMenuItem;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
     MenuItem5: TMenuItem;
@@ -122,6 +124,7 @@ type
     SQLQuery1: TSQLQuery;
     SQLQuery2: TSQLQuery;
     SQLQuery3: TSQLQuery;
+    SQLQuery4: TSQLQuery;
     SQLTransaction1: TSQLTransaction;
     Timer1: TTimer;
     procedure Button1Click(Sender: TObject);
@@ -156,6 +159,7 @@ type
     procedure MenuItem26Click(Sender: TObject);
     procedure MenuItem27Click(Sender: TObject);
     procedure MenuItem28Click(Sender: TObject);
+    procedure MenuItem29Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
@@ -217,7 +221,7 @@ begin
 
   if form1.os='windows' then s:=s+'\' else s:=s+'/';
 
-  Stream.SaveToFile(s+FormatDatetime('yy.MM.dd.hh.mm.ss',Time)+'.backup');
+  Stream.SaveToFile(s+FormatDatetime('yy.MM.dd.hh.mm.ss',Time)+'.chip');
 
   Zar.Free;
   Stream.Free;
@@ -626,18 +630,6 @@ begin
                basename:=path_program + '1.sqlite';
                ShowMessage('Файл настроек не найден, настройки сброшены по умолчанию');
           end;
-     //////////////////////////////////////////////////////////////
-       //считывание разрешения экрана и установка размера формы
-     if not trigger_form then
-         begin
-              //MaxRect := Monitor.WorkareaRect;
-              //NewHeight := MaxRect.Height;
-              //NewTop := MaxRect.Width;
-
-              //SetBounds(0, NewTop, Width, NewHeight-koef_heith);
-              //trigger_form:=true;
-         end;
-//     ShowMessage(inttostr(Left));
      predohranitel:=0;
      save_reserv;
      //подключение к базе даных
@@ -906,6 +898,22 @@ begin
      if form1.CheckBox5.Checked=true then finstat;
 
      SQLQuery1.RecNo:=rec_pos;
+end;
+
+procedure TForm1.MenuItem29Click(Sender: TObject);
+begin
+     SQLQuery4.Active:=false;
+     SQLQuery4.sql.Clear;
+     SQLQuery4.SQL.Add('Select Квитанция, Сумма from Ремонт where Оплачено=:sost');
+     SQLQuery4.ParamByName('sost').AsBoolean:=true;
+     SQLQuery4.SQL.Add(' and (Конец_ремонта>=:date3 and Конец_ремонта<=:date4) and Сумма>0');
+     SQLQuery4.ParamByName('date3').AsDate:=form1.DateTimePicker3.Date;
+     SQLQuery4.ParamByName('date4').AsDate:=form1.DateTimePicker4.Date;
+     SQLQuery4.SQL.add(' ORDER BY Конец_ремонта, Квитанция');
+     SQLQuery4.Active:=true;
+
+     CSVExporter1.Execute;
+     ShowMessage('Файл "1.csv" готов');
 end;
 
 //Контекстное меню "Состояние-Не выбрано"
