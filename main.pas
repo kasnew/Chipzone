@@ -1041,7 +1041,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.10          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.11          '+ TimeToStr(Time);
 end;
 
 end.
