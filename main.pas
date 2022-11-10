@@ -8,7 +8,7 @@ uses
   Classes, SysUtils, sqldb, db, fpcsvexport, mssqlconn, sqlite3conn, FileUtil,
   DateTimePicker, LR_DBSet, LR_Class, Forms, Controls, Graphics, Dialogs,
   StdCtrls, Menus, DBGrids, MaskEdit, Zakaz, Sklad, zlibar, Grids, Buttons,
-  ExtCtrls, ComCtrls, Types, MouseAndKeyInput, Ipfilebroker, IniFiles, settings, fpDBExport;
+  ExtCtrls, ComCtrls, Types, MouseAndKeyInput, Ipfilebroker, IniFiles, settings;
 
 type
 
@@ -225,6 +225,7 @@ begin
 
   Zar.Free;
   Stream.Free;
+
 end;
 //размер колонок таблицы
 procedure size_columns;
@@ -356,6 +357,7 @@ begin
         form1.sqlQuery3.Active:=true;
         form1.LabeledEdit6.Text:=inttostr(form1.SQLQuery3.Fields[0].Value);
 end;
+
 //включение фильтров поиска
 procedure find;
 begin
@@ -901,20 +903,23 @@ begin
 end;
 
 procedure TForm1.MenuItem29Click(Sender: TObject);
+var s : ansistring;
 begin
      SQLQuery4.Active:=false;
      SQLQuery4.sql.Clear;
-     SQLQuery4.SQL.Add('Select Квитанция, Сумма, Примечание from Ремонт where Оплачено=:sost');
+     SQLQuery4.SQL.Add('Select Конец_ремонта, Квитанция, Сумма, Примечание from Ремонт where Оплачено=:sost');
      SQLQuery4.ParamByName('sost').AsBoolean:=true;
      SQLQuery4.SQL.Add(' and (Конец_ремонта>=:date3 and Конец_ремонта<=:date4) and Сумма>0');
      SQLQuery4.ParamByName('date3').AsDate:=form1.DateTimePicker3.Date;
      SQLQuery4.ParamByName('date4').AsDate:=form1.DateTimePicker4.Date;
-     SQLQuery4.SQL.add(' ORDER BY Примечание');
+     SQLQuery4.SQL.add(' ORDER BY Конец_ремонта, Примечание, Квитанция');
      SQLQuery4.Active:=true;
 
      CSVExporter1.Execute;
      ShowMessage('Файл "1.csv" готов');
-     if os='linux' then ExecuteProcess('/usr/bin/libreoffice','1.csv') else ExecuteProcess('libreoffice','1.csv');
+     if os='linux' then begin
+                             ExecuteProcess('/usr/bin/libreoffice','1.csv')
+                             end else ExecuteProcess('libreoffice','1.csv');
 end;
 
 //Контекстное меню "Состояние-Не выбрано"
@@ -1041,7 +1046,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.11          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.12          '+ TimeToStr(Time);
 end;
 
 end.
