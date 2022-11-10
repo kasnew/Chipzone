@@ -914,6 +914,7 @@ begin
 
      CSVExporter1.Execute;
      ShowMessage('Файл "1.csv" готов');
+     if os='linux' then ExecuteProcess('/usr/bin/libreoffice','1.csv') else ExecuteProcess('libreoffice','1.csv');
 end;
 
 //Контекстное меню "Состояние-Не выбрано"
