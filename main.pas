@@ -904,12 +904,12 @@ procedure TForm1.MenuItem29Click(Sender: TObject);
 begin
      SQLQuery4.Active:=false;
      SQLQuery4.sql.Clear;
-     SQLQuery4.SQL.Add('Select Квитанция, Сумма from Ремонт where Оплачено=:sost');
+     SQLQuery4.SQL.Add('Select Квитанция, Сумма, Примечание from Ремонт where Оплачено=:sost');
      SQLQuery4.ParamByName('sost').AsBoolean:=true;
      SQLQuery4.SQL.Add(' and (Конец_ремонта>=:date3 and Конец_ремонта<=:date4) and Сумма>0');
      SQLQuery4.ParamByName('date3').AsDate:=form1.DateTimePicker3.Date;
      SQLQuery4.ParamByName('date4').AsDate:=form1.DateTimePicker4.Date;
-     SQLQuery4.SQL.add(' ORDER BY Конец_ремонта, Квитанция');
+     SQLQuery4.SQL.add(' ORDER BY Примечание');
      SQLQuery4.Active:=true;
 
      CSVExporter1.Execute;
@@ -1040,7 +1040,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.9          '+ TimeToStr(Time);
+     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.10          '+ TimeToStr(Time);
 end;
 
 end.
