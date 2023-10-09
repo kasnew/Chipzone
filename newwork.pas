@@ -144,7 +144,7 @@ begin
           form1.SQLQuery1.Active:=true;
           form1.FormCreate(Self);
           form4.Close;
-      end else if MessageDlg('Внимание!','Не полный номер телефона! Продолжить добавление?', mtConfirmation, [mbYes, mbNo],0) = mrYes then goto 1;
+      end else if MessageDlg('Увага!','Не повний номер телефону! Продовжити додавання?', mtConfirmation, [mbYes, mbNo],0) = mrYes then goto 1;
 end;
 
 end.

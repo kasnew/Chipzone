@@ -15,6 +15,9 @@ type
   { TForm1 }
 
   TForm1 = class(TForm)
+    BitBtn1: TBitBtn;
+    BitBtn3: TBitBtn;
+    BitBtn4: TBitBtn;
     Button1: TBitBtn;
     Button2: TBitBtn;
     Button3: TBitBtn;
@@ -22,17 +25,23 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TToggleBox;
     CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
     CheckBox5: TCheckBox;
     ComboBox1: TComboBox;
+    ComboBox2: TComboBox;
+    ComboBox3: TComboBox;
     CSVExporter1: TCSVExporter;
     DataSource1: TDataSource;
+    DataSource2: TDataSource;
     DateTimePicker1: TDateTimePicker;
     DateTimePicker2: TDateTimePicker;
     DateTimePicker3: TDateTimePicker;
     DateTimePicker4: TDateTimePicker;
     DateTimePicker5: TDateTimePicker;
     DateTimePicker6: TDateTimePicker;
+    DateTimePicker7: TDateTimePicker;
     DBGrid1: TDBGrid;
+    DBGrid2: TDBGrid;
     Edit1: TEdit;
     Edit10: TEdit;
     Edit11: TEdit;
@@ -52,11 +61,16 @@ type
     GroupBox4: TGroupBox;
     GroupBox5: TGroupBox;
     GroupBox6: TGroupBox;
+    GroupBox7: TGroupBox;
+    GroupBox8: TGroupBox;
     ImageList1: TImageList;
     Label1: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     Label12: TLabel;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
     Label19: TLabel;
     Label2: TLabel;
     Label20: TLabel;
@@ -76,11 +90,18 @@ type
     Label8: TLabel;
     Label9: TLabel;
     LabeledEdit1: TLabeledEdit;
+    LabeledEdit10: TLabeledEdit;
+    LabeledEdit11: TLabeledEdit;
+    LabeledEdit12: TLabeledEdit;
+    LabeledEdit13: TLabeledEdit;
     LabeledEdit2: TLabeledEdit;
     LabeledEdit3: TLabeledEdit;
     LabeledEdit4: TLabeledEdit;
     LabeledEdit5: TLabeledEdit;
     LabeledEdit6: TLabeledEdit;
+    LabeledEdit7: TLabeledEdit;
+    LabeledEdit8: TLabeledEdit;
+    LabeledEdit9: TLabeledEdit;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem10: TMenuItem;
@@ -112,6 +133,7 @@ type
     MenuItem8: TMenuItem;
     MenuItem9: TMenuItem;
     OpenDialog1: TOpenDialog;
+    PageControl1: TPageControl;
     PopupMenu1: TPopupMenu;
     RadioButton1: TRadioButton;
     RadioButton2: TRadioButton;
@@ -125,8 +147,14 @@ type
     SQLQuery2: TSQLQuery;
     SQLQuery3: TSQLQuery;
     SQLQuery4: TSQLQuery;
+    SQLQuery5: TSQLQuery;
     SQLTransaction1: TSQLTransaction;
+    TabSheet1: TTabSheet;
+    TabSheet2: TTabSheet;
     Timer1: TTimer;
+    procedure BitBtn1Click(Sender: TObject);
+    procedure BitBtn3Click(Sender: TObject);
+    procedure BitBtn4Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
@@ -134,6 +162,7 @@ type
     procedure CheckBox2Click(Sender: TObject);
     procedure CheckBox5Click(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
+    procedure ComboBox3Change(Sender: TObject);
     procedure DBGrid1CellClick();
     procedure DBGrid1DblClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -161,6 +190,7 @@ type
     procedure MenuItem28Click(Sender: TObject);
     procedure MenuItem29Click(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
@@ -173,6 +203,7 @@ type
   private
 
   public
+
     ID_remont,rec_pos,numberreport,predohranitel:integer;
     os,basename:string;
 
@@ -185,11 +216,14 @@ var
   new_record,autoupdate,trigger_form:boolean;
   IniF:TINIFile;
   path_program,path_backups:string;
+  gotivka, kartka: double;
   procedure finstat;
   procedure state_count;
   procedure find;
   procedure size_columns;
+  procedure size_columns2;
   procedure rem_connect;
+  procedure kasa_connect;
   procedure save_reserv;
 
 
@@ -238,18 +272,41 @@ begin
           Columns[2].Width:=0;//Описание неисправности
           Columns[3].Width:=0;//Выполненая работа
           Columns[4].Width:=70;//Квитанция
+          Columns[4].Title.Caption := 'Квитанція';
           Columns[5].Width:=form1.Width-800;//Наименование техники
+          Columns[5].Title.Caption := 'Найменування техніки';
           Columns[6].Width:=100;//Имя
+          Columns[6].Title.Caption := 'Ім''я клієнта';
           Columns[7].Width:=90;//Телефон
          // Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
           Columns[8].Width:=110;//Начало ремонта
+          Columns[8].Title.Caption := 'Початок ремонту';
           Columns[9].Width:=100;//Конец ремонта
+          Columns[9].Title.Caption := 'Кінець ремонту';
           Columns[10].Width:=50;//Сумма
+          Columns[10].Title.Caption := 'Сума';
           Columns[11].Width:=0;//Оплачено
           Columns[12].Width:=105;//Примечание
+          Columns[12].Title.Caption := 'Примітки';
           Columns[13].Width:=0;//Перезвонить
           Columns[14].Width:=0;//Доход
           Columns[15].Width:=120;//Состояние
+          Columns[15].Title.Caption := 'Стан';
+      end;
+end;
+procedure size_columns2;
+begin
+     with form1.DBGrid2 do
+      begin
+          Width:=form1.Width;
+          Columns[0].Width:=0;//ID
+          Columns[1].Width:=100;//Дата створення
+          Columns[2].Width:=100;//Дата виконання
+          Columns[3].Width:=65;//Категорія
+          Columns[4].Width:=210;//Опис
+          Columns[5].Width:=40;// Сума
+          Columns[6].Width:=45;//Готівка
+          Columns[7].Width:=45;//Картка
       end;
 end;
 //подключение к базе данных
@@ -266,7 +323,25 @@ begin
       size_columns;
       form1.SQLQuery1.First;
       last_NUM:=form1.SQLQuery1.FieldByName('Квитанция').AsInteger;
-      form1.GroupBox1.Caption:='Список техники ['+inttostr(form1.SQLQuery1.RecordCount)+']';
+      form1.GroupBox1.Caption:='Список техніки ['+inttostr(form1.SQLQuery1.RecordCount)+']';
+end;
+//подключение к базе данных
+procedure kasa_connect;
+begin
+    // showmessage('Ok');
+      form1.SQLQuery5.Active:=false;
+//      form1.SQLite3Connection1.Connected:=false;
+//      form1.SQLite3Connection1.Connected:=true;
+      form1.SQLQuery5.Sql.Clear;
+      form1.SQLQuery5.SQL.add('select ID, Дата_створення, Дата_виконання, Категорія, Опис, Сума, Готівка, Карта from Каса ORDER BY Дата_створення DESC');
+
+      form1.SQLQuery5.Active:=true;
+      size_columns2;
+      form1.SQLQuery5.First;
+      gotivka:=form1.SQLQuery5.FieldByName('Готівка').AsFloat;
+      kartka:=form1.SQLQuery5.FieldByName('Карта').AsFloat;
+      form1.LabeledEdit7.Text:=floattostr(gotivka);
+      form1.LabeledEdit8.Text:=floattostr(kartka);
 end;
 //вывод фин статистика за выбранный период
 procedure finstat;
@@ -440,10 +515,90 @@ begin
      form4.edit1.Text:=inttostr(last_NUM+1);
      Form4.ShowModal;
 end;
+
+//додавання операцій в касу
+procedure TForm1.BitBtn1Click(Sender: TObject);
+begin
+with form1.SQLQuery5 do
+      begin
+          Append;
+          Edit;
+          FieldByName('Дата_створення').AsDateTime:=now;
+          FieldByName('Дата_виконання').AsDateTime:=DateTimePicker7.Date;
+          FieldByName('Категорія').Asstring:=ComboBox2.Text;
+          FieldByName('Сума').Asfloat:=StrToInt(LabeledEdit9.Text);
+//          ShowMessage('!');
+           if CheckBox4.Checked=true then
+          begin
+               if ComboBox2.Text='Прибуток' then
+               begin
+                    FieldByName('Опис').Asstring:='Сплата карткою/безнал. '+LabeledEdit10.Text;
+                    FieldByName('Карта').Asfloat:=kartka+StrToFloat(LabeledEdit9.Text);
+                    FieldByName('Готівка').Asfloat:=gotivka;
+               end else
+               begin
+                    FieldByName('Опис').Asstring:=ComboBox2.Text+' карткою. '+LabeledEdit10.Text;
+                    FieldByName('Карта').Asfloat:=kartka-StrToFloat(LabeledEdit9.Text);
+                    FieldByName('Готівка').Asfloat:=gotivka;
+               end;
+          end
+          else
+          begin
+               if ComboBox2.Text='Прибуток' then
+               begin
+                    FieldByName('Опис').Asstring:='Сплата готівкою. '+LabeledEdit10.Text;
+                    FieldByName('Готівка').Asfloat:=gotivka+StrToFloat(LabeledEdit9.Text);
+                    FieldByName('Карта').Asfloat:=kartka;
+
+               end else
+               begin
+                    FieldByName('Опис').Asstring:=ComboBox2.Text+' готівкою. '+LabeledEdit10.Text;
+                    FieldByName('Готівка').Asfloat:=gotivka-StrToFloat(LabeledEdit9.Text);
+                    FieldByName('Карта').Asfloat:=kartka;
+               end;
+          end;
+          Post;// записываем данные
+          ApplyUpdates;// отправляем изменения в базу
+      end;
+      form1.combobox3.ItemIndex:=0;
+      form1.LabeledEdit9.Text:='0';
+      form1.LabeledEdit10.Clear;
+      form1.CheckBox4.Checked:=false;
+      form1.SQLTransaction1.Commit;
+      form1.SQLQuery1.Active:=false;
+      form1.SQLQuery1.Active:=true;
+      form1.FormCreate(Self);
+end;
+//частковий перевод безготівки в готівку
+procedure TForm1.BitBtn3Click(Sender: TObject);
+begin
+   CheckBox4.Checked:=false;
+   LabeledEdit9.Text:=LabeledEdit12.Text;
+   LabeledEdit13.text:='0';
+   kartka:=kartka-StrToFloat(LabeledEdit11.Text);
+   LabeledEdit8.Text:=FloatToStr(kartka);
+   LabeledEdit10.Text:='Перевод з картки/безналу. Сума '+LabeledEdit11.Text+'. ';
+   LabeledEdit11.text:='0';
+   LabeledEdit12.text:='0';
+   BitBtn1Click(Self);
+end;
+
+//перевод усієї безготівки в готівку
+procedure TForm1.BitBtn4Click(Sender: TObject);
+begin
+  CheckBox4.Checked:=false;
+  LabeledEdit9.Text:=LabeledEdit13.Text;
+  LabeledEdit13.text:='0';
+  LabeledEdit10.Text:='Перевод з картки/безналу. Сума '+LabeledEdit8.Text+'. ';
+  LabeledEdit8.Text:='0';
+  kartka:=0;
+  BitBtn1Click(Self);
+end;
+
 //удаление квитанции
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-     if MessageDlg('Удаление квитанции', 'Удалить запись?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
+     if MessageDlg('Видалення квитанції', 'Видалити запис?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
      begin
             SQLQuery2.Active:=false;
             SQLQuery2.SQL.Clear;
@@ -492,7 +647,7 @@ begin
      else
      begin
           rem_connect;
-          GroupBox2.Color:=clSkyBlue;
+          GroupBox2.Color:=clSilver;
           CheckBox2.Color:=clDefault;
      end;
 end;
@@ -508,6 +663,25 @@ begin
      form1.CheckBox2.Checked:=true;
      find;
      GroupBox2.Color:=clGray;
+end;
+//фільтр операцій
+procedure TForm1.ComboBox3Change(Sender: TObject);
+begin
+     //обманка - по сути вывод полного списка, к которому будем добавлять фильтры
+           form1.SQLQuery5.Active:=false;
+           form1.SQLQuery5.SQL.Clear;
+           form1.SQLQuery5.SQL.add('select ID, Дата_створення, Дата_виконання, Категорія, Опис, Сума, Готівка, Карта from Каса where ID>=0 ');
+           if combobox3.text<>'Усі' then
+           begin
+                form1.SQLQuery5.SQL.add(' AND Категорія='''+combobox3.text+''' ');
+                form1.SQLQuery5.SQL.add(' ORDER BY Дата_створення DESC');
+           end else kasa_connect;
+
+           form1.SQLQuery5.Active:=true;
+
+           if form1.SQLQuery5.RecordCount=0 then kasa_connect;
+
+           size_columns2;
 end;
 
 //получиние ID выбранной записи
@@ -539,13 +713,13 @@ begin
      begin
           case SQLQuery1.FieldByName('Состояние').Value of
           0:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('       '),Rect.Top+2,'       ');end;
-          1:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В очереди'),Rect.Top+2,'В очереди');end;
-          2:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('В работе'),Rect.Top+2,'В работе');end;
-          3:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Ждем ответ/детали'),Rect.Top+2,'Ждем ответ/детали');end;
-          4:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Готов к выдаче'),Rect.Top+2,'Готов к выдаче');end;
-          5:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не дозвонились'),Rect.Top+2,'Не дозвонились');end;
+          1:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('У черзі'),Rect.Top+2,'У черзі');end;
+          2:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('У роботі'),Rect.Top+2,'У роботі');end;
+          3:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Очікув. відпов./деталі'),Rect.Top+2,'Очікув. відпов./деталі');end;
+          4:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Готовий до видачі'),Rect.Top+2,'Готовий до видачі');end;
+          5:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Не додзвонилися'),Rect.Top+2,'Не додзвонилися');end;
           6:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('       '),Rect.Top+2,'       ');end;
-          7:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Одесса'),Rect.Top+2,'Одесса');end;
+          7:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Одеса'),Rect.Top+2,'Одеса');end;
           end;
      end;
 end;
@@ -630,7 +804,7 @@ begin
                //inif.WriteString('base','koef_height','0');
                inif.Free;
                basename:=path_program + '1.sqlite';
-               ShowMessage('Файл настроек не найден, настройки сброшены по умолчанию');
+               ShowMessage('Файл налаштувань не знайдено, налаштування скинуті за замовчуванням');
           end;
      predohranitel:=0;
      save_reserv;
@@ -638,6 +812,7 @@ begin
      SQLite3Connection1.DatabaseName:=basename;
      SQLite3Connection1.Connected:=true;
      rem_connect;
+     kasa_connect;
      state_count;
      ID_remont:=1;//по умолчанию присвоим значение идентификатору выбраной записи
 
@@ -649,6 +824,7 @@ begin
      DateTimePicker4.Date:=date;
      DateTimePicker5.Date:=date;
      DateTimePicker6.Date:=date;
+     DateTimePicker7.Date:=date;
      //задержка всплывающего номера телефона текущей позиции
      Application.HintHidePause:=100000;
 end;
@@ -656,6 +832,7 @@ end;
 procedure TForm1.FormShow(Sender: TObject);
 begin
      size_columns;
+     size_columns2;
      Button1.SetFocus;
 end;
 
@@ -743,12 +920,12 @@ begin
           FieldByName('Выполнено').AsString:='Принято в '+TimeToStr(Now);
           FieldByName('Состояние').AsInteger:=1;
 
-          if ((Sender as TMenuItem).Caption='Имя+телефон+техника')or((Sender as TMenuItem).Caption='Возврат') then
+          if ((Sender as TMenuItem).Caption='Ім''я+телефон+техніка')or((Sender as TMenuItem).Caption='Повернення') then
           FieldByName('Наименование_техники').AsString:=tech;
 
-          if (Sender as TMenuItem).Caption='Возврат' then
+          if (Sender as TMenuItem).Caption='Повернення' then
           begin
-               FieldByName('Примечание').AsString:='Возврат по '+kvit;
+               FieldByName('Примечание').AsString:='Повернення по '+kvit;
                FieldByName('Стоимость').AsFloat:=dohod*(-1);
                FieldByName('Сумма').AsFloat:=summa*(-1);
                FieldByName('Оплачено').AsBoolean:=true;
@@ -916,7 +1093,7 @@ begin
      SQLQuery4.Active:=true;
 
      CSVExporter1.Execute;
-     ShowMessage('Файл "1.csv" готов');
+     ShowMessage('Файл "1.csv" готовий');
      if os='linux' then begin
                              ExecuteProcess('/usr/bin/libreoffice','1.csv')
                              end else ExecuteProcess('libreoffice','1.csv');
@@ -946,6 +1123,11 @@ procedure TForm1.MenuItem2Click(Sender: TObject);
 begin
      form1.Visible:=false;
      form6.ShowModal;
+end;
+
+procedure TForm1.MenuItem3Click(Sender: TObject);
+begin
+
 end;
 
 procedure TForm1.MenuItem4Click(Sender: TObject);
@@ -982,7 +1164,7 @@ begin
            ZReadArc.Free;
            ArchStream.Free;
            FileStream.Free;
-           ShowMessage('Распаковка завершена!');
+           ShowMessage('Розпакування завершене!');
       end;
 end;
 
@@ -1046,7 +1228,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервис центр "ЧипЗона" v. 3.7.12          '+ TimeToStr(Time);
+     form1.Caption:='Сервіс центр "ЧіпЗона" v. 4.0          '+ TimeToStr(Time);
 end;
 
 end.

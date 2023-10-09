@@ -125,6 +125,7 @@ end;
 procedure TForm6.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
      if form1.CheckBox2.Checked=true then find else rem_connect;
+     kasa_connect;
      form1.Visible:=true;
      form1.Button1.SetFocus;
 end;
@@ -215,6 +216,8 @@ begin
     else  //преобразование данных из буфера обмена
     begin
          s:=Clipboard.AsText;
+         If ComboBox1.ItemIndex=0 then
+            begin
          while pos(#10,s)>0 do //разбиваем на строки
              begin
                   kolonka:=0;
@@ -281,6 +284,28 @@ begin
                         Sqlquery1.Post;// записываем данные
                         sqlquery1.ApplyUpdates;// отправляем изменения в базу
                   end;
+    end;{ else if ComboBox1.ItemIndex=0 then
+       begin
+          // Обробляємо текст по 12 рядків
+            for i := 0 to InputText.Count div 12 - 1 do
+            begin
+                 ID_clipboard := InputText[i * 12 + 3];
+                 Name_clipboard := InputText[i * 12];
+                 kol_clipboard := Copy(InputText[i * 12 + 7], 1, Pos(' ', InputText[i * 12 + 7]) - 1);
+                 dollar := StringReplace(InputText[i * 12 + 9], '$', '', [rfReplaceAll]);
+                 SQLQuery1.Append;
+                 SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
+                 SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
+                 SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
+                 SQLQuery1.FieldByName('Код_товара').AsString:=ID_clipboard;
+                 SQLQuery1.FieldByName('Наименование_расходника').AsString:=Name_clipboard;
+                 SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
+                 SQLQuery1.FieldByName('Цена_уе').Asfloat:=dollar;
+                 SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit4.Text)*dollar;
+                 SQLQuery1.FieldByName('Наличие').AsBoolean:=true;
+                 Sqlquery1.Post;// записываем данные
+                 sqlquery1.ApplyUpdates;// отправляем изменения в базу
+            end}
     end;
     form1.SQLTransaction1.Commit;
     SQLQuery1.Active:=false;

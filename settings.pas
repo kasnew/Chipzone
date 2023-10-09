@@ -86,11 +86,11 @@ var size_backups:int64;
 begin
      size_backups:=GetDirSize(path_backups,true);
      case size_backups of
-     0..1024: button3.Caption:='Удалить резервные копии ('+IntToStr(size_backups)+' bytes) ';
-     1025..1048576: button3.Caption:='Удалить резервные копии ('+floatToStrf(size_backups/1024,ffFixed,5,2) +' Kb) ';
-     1048577..1073741824:button3.Caption:='Удалить резервные копии ('+floatToStrf(size_backups/1024/1024,ffFixed,5,1)+' Mb) ';
+     0..1024: button3.Caption:='Видалити резервні копії ('+IntToStr(size_backups)+' bytes) ';
+     1025..1048576: button3.Caption:='Видалити резервні копії ('+floatToStrf(size_backups/1024,ffFixed,5,2) +' Kb) ';
+     1048577..1073741824:button3.Caption:='Видалити резервні копії ('+floatToStrf(size_backups/1024/1024,ffFixed,5,1)+' Mb) ';
      end;
-     Button3.Caption:=Button3.Caption+IntToStr(FindAllFiles(path_backups,'*.*',false).Count)+' файла(-ов)';
+     Button3.Caption:=Button3.Caption+IntToStr(FindAllFiles(path_backups,'*.*',false).Count)+' файли(-ів)';
 end;
 
 procedure TForm3.Button2Click(Sender: TObject);
@@ -104,10 +104,10 @@ end;
 //Удаление backup-ов
 procedure TForm3.Button3Click(Sender: TObject);
 begin
-     if MessageDlg('Очистка', 'Удалить все резервные копии базы?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
+     if MessageDlg('Очистка', 'Видалити усі резервні копії бази?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
      begin
           if DeleteDirectory(path_backups, True) then RemoveDir(path_backups);
-          ShowMessage('Резервные копии базы удалены!');
+          ShowMessage('Резервні копії бази видалені!');
           save_reserv;
           form3.FormShow(Self);
      end;
@@ -123,7 +123,7 @@ begin
      inif.WriteString('base','folder',edit2.Text);
      inif.WriteString('base','lastOS',form1.os);
      inif.Free;
-     ShowMessage('Настройки сохранены!');
+     ShowMessage('Налаштування збережено!');
      close;
 end;
 

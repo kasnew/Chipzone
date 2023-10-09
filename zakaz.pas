@@ -22,6 +22,7 @@ type
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
     CheckBox3: TCheckBox;
+    CheckBox4: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
     DataSource1: TDataSource;
@@ -349,7 +350,7 @@ end;
 procedure TForm2.Button3Click(Sender: TObject);
 var id:integer;
 begin
-      if MessageDlg('Удаление расходника', 'Удалить запись?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
+      if MessageDlg('Видалення товару', 'Видалити запис?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
                 Begin
                      id:=SQLQuery1.FieldByName('ID').AsInteger;
                      if (SQLQuery1.FieldByName('Поставщик').AsString='ЧипЗона') or (SQLQuery1.FieldByName('Поставщик').AsString='Услуга') then
@@ -483,6 +484,7 @@ begin
            SQLQuery4.ParamByName('numWORK').Value:=edit1.Text;
            SQLQuery4.ParamByName('date').Value:=DateTimePicker2.DateTime;
            SQLQuery4.ExecSQL;
+
       end;
 end;
 
@@ -521,6 +523,23 @@ begin
           Post;// записываем данные
           ApplyUpdates;// отправляем изменения в базу
       end;
+
+      ////////внесення запусу до каси
+      if StrToFloat(edit11.Text)<>0 then
+      if CheckBox2.Checked=true then
+           begin
+               form1.ComboBox2.ItemIndex:=0;
+               if CheckBox4.Checked=true then form1.CheckBox4.Checked:=true;
+               CheckBox4.Checked:=false;
+               form1.DateTimePicker7.Date:=DateTimePicker2.Date;
+               form1.LabeledEdit9.Text:=edit11.Text;
+               form1.LabeledEdit10.Text:='Квитанція '+edit1.text+'. ';
+               form1.BitBtn1Click(Self);
+               form1.CheckBox4.Checked:=false;
+           end;
+
+           /////
+
       form1.SQLTransaction1.Commit;
 
       button1.Enabled:=false;//кнопка "сохранить"
@@ -528,6 +547,8 @@ begin
 
       form1.SQLQuery1.Active:=false;
       form1.SQLQuery1.Active:=true;
+      form1.SQLQuery5.Active:=false;
+      form1.SQLQuery5.Active:=true;
       reconnect_rashodniki;
       state_count;
 
