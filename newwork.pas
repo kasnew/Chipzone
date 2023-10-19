@@ -134,7 +134,7 @@ begin
           form1.SQLQuery1.FieldByName('Оплачено').AsBoolean:=false;
           form1.sQLQuery1.FieldByName('Перезвонить').AsBoolean:=false;
           form1.sQLQuery1.FieldByName('Состояние').AsInteger:=1;//В очереди
-          form1.sQLQuery1.FieldByName('Выполнено').AsString:='Принято в '+TimeToStr(Now);
+          form1.sQLQuery1.FieldByName('Выполнено').AsString:='Прийнято о '+TimeToStr(Now);
           //form1.SQLQuery1.fields.FieldByName('ID').Required:=false;
 
           form1.Sqlquery1.Post;// записываем данные

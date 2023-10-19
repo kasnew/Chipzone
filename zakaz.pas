@@ -319,6 +319,7 @@ end;
 //закрытие формы
 procedure TForm2.FormClose(Sender: TObject);
 begin
+
       edit1.Text:='0';
       edit5.Clear;
       DBLookupComboBox1.KeyValue := NULL;
@@ -470,12 +471,13 @@ end;
 //Оплачено
 procedure TForm2.CheckBox2Click(Sender: TObject);
 begin
+
       inc(form1.predohranitel);
       Button1.Enabled:=true;
       if form1.predohranitel>1 then
       if checkbox2.Checked=true then
       begin
-           if MessageDlg('Дата оплаты','Дата оплаты сегодня?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
+           if MessageDlg('Дата сплати','Дата сплати сьогодні?', mtConfirmation, [mbYes, mbNo], 0) = mrYes
            then DateTimePicker2.Date:=date;
 
            SQLQuery4.Active:=false;
@@ -497,6 +499,7 @@ end;
 procedure TForm2.Button1Click(Sender: TObject);
 begin
       rasschet;
+
       with SQLQuery2 do
       begin
           Active:=false;
@@ -524,6 +527,19 @@ begin
           ApplyUpdates;// отправляем изменения в базу
       end;
 
+      form1.SQLTransaction1.Commit;
+
+      button1.Enabled:=false;//кнопка "сохранить"
+      Button2.Enabled:=true;//кнопка "закрыть"
+
+      form1.SQLQuery1.Active:=false;
+      form1.SQLQuery1.Active:=true;
+      form1.SQLQuery5.Active:=false;
+      form1.SQLQuery5.Active:=true;
+      reconnect_rashodniki;
+      state_count;
+
+      finstat;
       ////////внесення запусу до каси
       if StrToFloat(edit11.Text)<>0 then
       if CheckBox2.Checked=true then
@@ -539,20 +555,6 @@ begin
            end;
 
            /////
-
-      form1.SQLTransaction1.Commit;
-
-      button1.Enabled:=false;//кнопка "сохранить"
-      Button2.Enabled:=true;//кнопка "закрыть"
-
-      form1.SQLQuery1.Active:=false;
-      form1.SQLQuery1.Active:=true;
-      form1.SQLQuery5.Active:=false;
-      form1.SQLQuery5.Active:=true;
-      reconnect_rashodniki;
-      state_count;
-
-      finstat;
 end;
 
 end.
