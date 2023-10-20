@@ -497,7 +497,7 @@ object Form1: TForm1
         Caption = 'Список техніки'
         ClientHeight = 244
         ClientWidth = 1016
-        Color = clSilver
+        Color = 12615808
         ParentBackground = False
         ParentColor = False
         TabOrder = 0
@@ -542,7 +542,7 @@ object Form1: TForm1
         Caption = 'Фільтр пошуку'
         ClientHeight = 221
         ClientWidth = 640
-        Color = clSilver
+        Color = 12615808
         ParentBackground = False
         ParentColor = False
         TabOrder = 1
@@ -833,10 +833,13 @@ object Form1: TForm1
         object Edit6: TEdit
           AnchorSideTop.Control = Label11
           AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = Edit5
+          AnchorSideRight.Side = asrBottom
           Left = 400
           Height = 23
           Top = 89
-          Width = 225
+          Width = 233
+          Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Top = 2
           OnChange = Edit1Change
           OnKeyPress = Edit1KeyPress
@@ -997,7 +1000,7 @@ object Form1: TForm1
           Left = 400
           Height = 23
           Top = 127
-          Width = 225
+          Width = 233
           Anchors = [akTop, akLeft, akRight]
           ItemHeight = 15
           Items.Strings = (
@@ -1042,7 +1045,7 @@ object Form1: TForm1
         Caption = 'Фінансова статистика'
         ClientHeight = 221
         ClientWidth = 271
-        Color = clSilver
+        Color = 12615808
         ParentBackground = False
         ParentColor = False
         TabOrder = 2
@@ -1127,37 +1130,49 @@ object Form1: TForm1
           ParentColor = False
         end
         object Edit10: TEdit
+          AnchorSideRight.Control = DateTimePicker6
+          AnchorSideRight.Side = asrBottom
           Left = 144
           Height = 23
           Top = 104
-          Width = 81
+          Width = 87
+          Anchors = [akTop, akLeft, akRight]
           ReadOnly = True
           TabOrder = 1
           Text = '0'
         end
         object Edit11: TEdit
+          AnchorSideRight.Control = DateTimePicker6
+          AnchorSideRight.Side = asrBottom
           Left = 144
           Height = 23
           Top = 136
-          Width = 81
+          Width = 87
+          Anchors = [akTop, akLeft, akRight]
           ReadOnly = True
           TabOrder = 2
           Text = '0'
         end
         object Edit12: TEdit
+          AnchorSideRight.Control = DateTimePicker6
+          AnchorSideRight.Side = asrBottom
           Left = 144
           Height = 23
           Top = 166
-          Width = 81
+          Width = 87
+          Anchors = [akTop, akLeft, akRight]
           ReadOnly = True
           TabOrder = 3
           Text = '0'
         end
         object Edit13: TEdit
+          AnchorSideRight.Control = DateTimePicker6
+          AnchorSideRight.Side = asrBottom
           Left = 144
           Height = 23
           Top = 196
-          Width = 81
+          Width = 87
+          Anchors = [akTop, akLeft, akRight]
           ReadOnly = True
           TabOrder = 4
           Text = '0'
@@ -1275,7 +1290,7 @@ object Form1: TForm1
         Caption = 'Стан'
         ClientHeight = 64
         ClientWidth = 736
-        Color = clSilver
+        Color = 12615808
         Font.Height = -11
         Font.Name = 'Arial'
         Font.Style = [fsBold]
@@ -1554,10 +1569,13 @@ object Form1: TForm1
           ParentColor = False
         end
         object DBGrid2: TDBGrid
+          AnchorSideRight.Control = GroupBox7
+          AnchorSideRight.Side = asrBottom
           Left = 392
           Height = 376
           Top = 0
-          Width = 552
+          Width = 616
+          Anchors = [akTop, akLeft, akRight]
           Color = clWindow
           Columns = <>
           DataSource = DataSource2
@@ -1565,7 +1583,9 @@ object Form1: TForm1
           Font.Name = 'Arial'
           Font.Style = [fsBold]
           ParentFont = False
+          ReadOnly = True
           Scrollbars = ssVertical
+          ShowHint = True
           TabOrder = 8
         end
         object LabeledEdit11: TLabeledEdit
@@ -1631,11 +1651,11 @@ object Form1: TForm1
           Left = 392
           Height = 161
           Top = 376
-          Width = 552
+          Width = 616
           Anchors = [akTop, akLeft, akRight]
           Caption = 'Фільтри'
           ClientHeight = 141
-          ClientWidth = 548
+          ClientWidth = 612
           TabOrder = 14
           object Label15: TLabel
             AnchorSideLeft.Control = GroupBox8

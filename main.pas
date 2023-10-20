@@ -271,26 +271,26 @@ begin
           Columns[1].Width:=0;//Стоимость - чистая работа
           Columns[2].Width:=0;//Описание неисправности
           Columns[3].Width:=0;//Выполненая работа
-          Columns[4].Width:=70;//Квитанция
+          Columns[4].Width:=65;//Квитанция
           Columns[4].Title.Caption := 'Квитанція';
           Columns[5].Width:=form1.Width-800;//Наименование техники
           Columns[5].Title.Caption := 'Найменування техніки';
-          Columns[6].Width:=100;//Имя
+          Columns[6].Width:=105;//Имя
           Columns[6].Title.Caption := 'Ім''я клієнта';
-          Columns[7].Width:=90;//Телефон
+          Columns[7].Width:=85;//Телефон
          // Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
-          Columns[8].Width:=110;//Начало ремонта
+          Columns[8].Width:=105;//Начало ремонта
           Columns[8].Title.Caption := 'Початок ремонту';
-          Columns[9].Width:=100;//Конец ремонта
+          Columns[9].Width:=95;//Конец ремонта
           Columns[9].Title.Caption := 'Кінець ремонту';
           Columns[10].Width:=50;//Сумма
           Columns[10].Title.Caption := 'Сума';
           Columns[11].Width:=0;//Оплачено
-          Columns[12].Width:=105;//Примечание
+          Columns[12].Width:=120;//Примечание
           Columns[12].Title.Caption := 'Примітки';
           Columns[13].Width:=0;//Перезвонить
           Columns[14].Width:=0;//Доход
-          Columns[15].Width:=120;//Состояние
+          Columns[15].Width:=130;//Состояние
           Columns[15].Title.Caption := 'Стан';
       end;
 end;
@@ -827,6 +827,7 @@ begin
      DateTimePicker7.Date:=date;
      //задержка всплывающего номера телефона текущей позиции
      Application.HintHidePause:=100000;
+     //Tabsheet1.Color:= TColor($00C08080);
 end;
 //активация кнопки "добавить" при открытии программы
 procedure TForm1.FormShow(Sender: TObject);
