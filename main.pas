@@ -527,7 +527,6 @@ with form1.SQLQuery5 do
           FieldByName('Дата_виконання').AsDateTime:=DateTimePicker7.Date;
           FieldByName('Категорія').Asstring:=ComboBox2.Text;
           FieldByName('Сума').Asfloat:=StrToInt(LabeledEdit9.Text);
-//          ShowMessage('!');
            if CheckBox4.Checked=true then
           begin
                if ComboBox2.Text='Прибуток' then
@@ -565,8 +564,8 @@ with form1.SQLQuery5 do
       form1.LabeledEdit10.Clear;
       form1.CheckBox4.Checked:=false;
       form1.SQLTransaction1.Commit;
-      form1.SQLQuery1.Active:=false;
-      form1.SQLQuery1.Active:=true;
+    //  form1.SQLQuery1.Active:=false;
+    //  form1.SQLQuery1.Active:=true;
       form1.FormCreate(Self);
 end;
 //частковий перевод безготівки в готівку
@@ -647,7 +646,7 @@ begin
      else
      begin
           rem_connect;
-          GroupBox2.Color:=clSilver;
+          GroupBox2.Color:=$00C08080;
           CheckBox2.Color:=clDefault;
      end;
 end;
@@ -828,6 +827,10 @@ begin
      //задержка всплывающего номера телефона текущей позиции
      Application.HintHidePause:=100000;
      //Tabsheet1.Color:= TColor($00C08080);
+     LabeledEdit12.NumbersOnly:=true;
+     LabeledEdit11.NumbersOnly:=true;
+     LabeledEdit13.NumbersOnly:=true;
+     LabeledEdit9.NumbersOnly:=true;
 end;
 //активация кнопки "добавить" при открытии программы
 procedure TForm1.FormShow(Sender: TObject);

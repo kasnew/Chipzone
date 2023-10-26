@@ -103,6 +103,7 @@ type
   end;
 
 var
+  triger: Boolean;
   Form2: TForm2;
   procedure size_columns_rashodniki;
   procedure reconnect_rashodniki;
@@ -229,7 +230,7 @@ begin
 
       ComboBox1Change(Self);
       Memo4.SetFocus;
-
+      if checkbox2.Checked=true then triger:=true;
 end;
 
 //выбор контрагента
@@ -319,7 +320,7 @@ end;
 //закрытие формы
 procedure TForm2.FormClose(Sender: TObject);
 begin
-
+     triger:=false;
       edit1.Text:='0';
       edit5.Clear;
       DBLookupComboBox1.KeyValue := NULL;
@@ -542,8 +543,9 @@ begin
       finstat;
       ////////внесення запусу до каси
       if StrToFloat(edit11.Text)<>0 then
-      if CheckBox2.Checked=true then
+      if (CheckBox2.Checked=true) and (triger=false) then
            begin
+                ShowMessage(BoolToStr(triger));
                form1.ComboBox2.ItemIndex:=0;
                if CheckBox4.Checked=true then form1.CheckBox4.Checked:=true;
                CheckBox4.Checked:=false;
