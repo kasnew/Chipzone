@@ -99,13 +99,23 @@ procedure size_columns;
 begin
       form6.DBGrid1.Columns[0].Width:=0;//Код
       form6.DBGrid1.Columns[1].Width:=70;//Приход
-      form6.DBGrid1.Columns[2].Width:=75;//Поставщик
-      form6.DBGrid1.Columns[3].Width:=75;//Накладная
+      form6.DBGrid1.Columns[2].Width:=55;//Поставщик
+      form6.DBGrid1.Columns[2].Title.Caption := 'Постач.';
+      form6.DBGrid1.Columns[3].Width:=105;//Накладная
+      form6.DBGrid1.Columns[3].Title.Caption := 'Накладна';
       form6.DBGrid1.Columns[4].Width:=75;//Код_товара
-      form6.DBGrid1.Columns[5].Width:=form1.DBGrid1.Width-485;//Наименование_товара
-      form6.DBGrid1.Columns[6].Width:=60;//Цена_уе
-      form6.DBGrid1.Columns[7].Width:=45;//Курс
-      form6.DBGrid1.Columns[8].Width:=50;//Вход
+      form6.DBGrid1.Columns[4].Title.Caption := 'Код товару';
+      form6.DBGrid1.Columns[5].Width:=form1.DBGrid1.Width-515;//Наименование_товара
+      form6.DBGrid1.Columns[5].Title.Caption := 'Назва товару';
+      form6.DBGrid1.Columns[6].Width:=50;//Цена_уе
+      form6.DBGrid1.Columns[6].Title.Caption := 'Ціна, $';
+      form6.DBGrid1.Columns[6].DisplayFormat:='0.00';
+      form6.DBGrid1.Columns[7].Width:=50;//Курс
+      form6.DBGrid1.Columns[7].Title.Caption := 'Курс';
+      form6.DBGrid1.Columns[7].DisplayFormat:='0.00';
+      form6.DBGrid1.Columns[8].Width:=60;//Вход
+      form6.DBGrid1.Columns[8].Title.Caption := 'Вхід';
+      form6.DBGrid1.Columns[8].DisplayFormat:='0.00';
       form6.DBGrid1.Columns[9].Width:=0;//Наличие
       form6.DBGrid1.Columns[10].Width:=0;//Дата_продажи
       form6.DBGrid1.Columns[11].Width:=0;//№_квитанции
@@ -354,7 +364,7 @@ procedure TForm6.FormCreate(Sender: TObject);
 begin
       SQLQuery1.Active:=false;
       SQLQuery1.SQL.Clear;
-      SQLQuery1.SQL.Add('select ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, Цена_уе, Курс, Вход, Наличие, Дата_продажи, №_квитанции  from Расходники where Наличие=:sost ORDER BY Приход DESC');
+      SQLQuery1.SQL.Add('select ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, ROUND(Цена_уе,2), ROUND(Курс,2), ROUND(Вход,2), Наличие, Дата_продажи, №_квитанции  from Расходники where Наличие=:sost ORDER BY Приход DESC');
       SQLQuery1.ParamByName('sost').AsBoolean:=true;
       SQLQuery1.Active:=true;
       size_columns;
@@ -387,7 +397,7 @@ procedure find_sklad;
 begin
        form6.SQLQuery1.Active:=false;
        form6.SQLQuery1.sql.Clear;
-       form6.SQLQuery1.SQL.Add('Select ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, Цена_уе, Курс, Вход, Наличие, Дата_продажи, №_квитанции from Расходники where Наличие=:sost');
+       form6.SQLQuery1.SQL.Add('Select ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, ROUND(Цена_уе,2), ROUND(Курс,2), ROUND(Вход,2), Наличие, Дата_продажи, №_квитанции from Расходники where Наличие=:sost');
        form6.SQLQuery1.SQL.Add(' and (Приход>=:date1 and Приход<=:date2)');
        form6.SQLQuery1.ParamByName('date1').AsDate:=form6.DateTimePicker2.Date;
        form6.SQLQuery1.ParamByName('date2').AsDate:=form6.DateTimePicker3.Date;
@@ -429,7 +439,7 @@ end;
 //появление галочки "импорт из контекстного меню" для Интеха
 procedure TForm6.ComboBox1Change(Sender: TObject);
 begin
-     if (ComboBox1.Items[ComboBox1.ItemIndex]='Интех') or (ComboBox1.Items[ComboBox1.ItemIndex]='ARC') then CheckBox2.Visible:=true else
+     if (ComboBox1.Items[ComboBox1.ItemIndex]='DFI') or (ComboBox1.Items[ComboBox1.ItemIndex]='ARC') then CheckBox2.Visible:=true else
      begin
           Checkbox2.Checked:=false;
           CheckBox2Click(Self);

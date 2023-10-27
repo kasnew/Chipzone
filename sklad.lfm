@@ -101,15 +101,15 @@ object Form6: TForm6
       ItemHeight = 15
       ItemIndex = 0
       Items.Strings = (
-        'Интех'
-        'БУ'
+        'DFI'
+        'БВ'
         'ARC'
-        'Другое'
+        'Інше'
       )
       OnChange = ComboBox1Change
       OnSelect = ComboBox1Change
       TabOrder = 1
-      Text = 'Интех'
+      Text = 'DFI'
     end
     object Label3: TLabel
       AnchorSideTop.Control = Label1
@@ -556,15 +556,19 @@ object Form6: TForm6
     object CheckBox2: TCheckBox
       AnchorSideLeft.Control = Button1
       AnchorSideLeft.Side = asrBottom
-      AnchorSideTop.Control = Edit3
-      AnchorSideTop.Side = asrBottom
-      Left = 512
-      Height = 19
-      Top = 54
-      Width = 155
-      BorderSpacing.Top = 15
-      Caption = 'Імпорт з Буферу обміну'
+      AnchorSideTop.Control = Button1
+      Left = 517
+      Height = 23
+      Top = 53
+      Width = 212
+      BorderSpacing.Left = 5
+      BorderSpacing.Top = 5
+      Caption = 'Імпорт із буферу обміну'
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
       OnClick = CheckBox2Click
+      ParentFont = False
       TabOrder = 11
     end
   end
@@ -1014,13 +1018,12 @@ object Form6: TForm6
       Top = 24
       Width = 80
       ItemHeight = 15
-      ItemIndex = 0
       Items.Strings = (
-        'Все'
-        'Интех'
-        'БУ'
+        'Усі'
+        'DFI'
+        'БВ'
         'ARC'
-        'Другое'
+        'Інше'
       )
       OnChange = CheckBox1Click
       TabOrder = 1
@@ -1196,16 +1199,14 @@ object Form6: TForm6
       end
     end
     object Button4: TBitBtn
-      AnchorSideTop.Control = RadioGroup1
-      AnchorSideBottom.Control = RadioGroup1
+      AnchorSideTop.Control = CheckBox1
+      AnchorSideBottom.Control = CheckBox1
       AnchorSideBottom.Side = asrBottom
       Left = 96
-      Height = 42
+      Height = 45
       Top = 10
       Width = 96
       Anchors = [akTop, akBottom]
-      BorderSpacing.Top = 10
-      BorderSpacing.Bottom = 10
       Caption = 'Очистити'
       Glyph.Data = {
         36040000424D3604000000000000360000002800000010000000100000000100

@@ -94,6 +94,7 @@ type
     LabeledEdit11: TLabeledEdit;
     LabeledEdit12: TLabeledEdit;
     LabeledEdit13: TLabeledEdit;
+    LabeledEdit14: TLabeledEdit;
     LabeledEdit2: TLabeledEdit;
     LabeledEdit3: TLabeledEdit;
     LabeledEdit4: TLabeledEdit;
@@ -278,7 +279,7 @@ begin
           Columns[6].Width:=105;//Имя
           Columns[6].Title.Caption := 'Ім''я клієнта';
           Columns[7].Width:=85;//Телефон
-         // Columns[7].DisplayFormat:='###,###, ##, ##000-000-00-00';
+          Columns[7].DisplayFormat := '###-###-##-##';
           Columns[8].Width:=105;//Начало ремонта
           Columns[8].Title.Caption := 'Початок ремонту';
           Columns[9].Width:=95;//Конец ремонта
@@ -301,9 +302,9 @@ begin
           Width:=form1.Width;
           Columns[0].Width:=0;//ID
           Columns[1].Width:=100;//Дата створення
-          Columns[2].Width:=100;//Дата виконання
+          Columns[2].Width:=0;//Дата виконання
           Columns[3].Width:=65;//Категорія
-          Columns[4].Width:=210;//Опис
+          Columns[4].Width:=290;//Опис
           Columns[5].Width:=40;// Сума
           Columns[6].Width:=45;//Готівка
           Columns[7].Width:=45;//Картка
@@ -670,9 +671,10 @@ begin
            form1.SQLQuery5.Active:=false;
            form1.SQLQuery5.SQL.Clear;
            form1.SQLQuery5.SQL.add('select ID, Дата_створення, Дата_виконання, Категорія, Опис, Сума, Готівка, Карта from Каса where ID>=0 ');
-           if combobox3.text<>'Усі' then
+           if (combobox3.text<>'Усі')or(length(form1.LabeledEdit14.text)>0) then
            begin
-                form1.SQLQuery5.SQL.add(' AND Категорія='''+combobox3.text+''' ');
+                if (combobox3.text<>'Усі') then form1.SQLQuery5.SQL.add(' AND Категорія='''+combobox3.text+''' ');
+                if length(form1.LabeledEdit14.text)>0 then form1.SQLQuery5.SQL.add(' AND Опис LIKE '''+'%'+LabeledEdit14.text+'%'+'''');
                 form1.SQLQuery5.SQL.add(' ORDER BY Дата_створення DESC');
            end else kasa_connect;
 
@@ -1232,7 +1234,9 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервіс центр "ЧіпЗона" v. 4.0          '+ TimeToStr(Time);
+     form1.Caption:='Сервіс центр "ЧіпЗона" v. 4.0.3          '+ TimeToStr(Time);
+     form2.Caption:='Виконання роботи          '+ TimeToStr(Time);
+     form6.Caption:='Склад          '+ TimeToStr(Time);
 end;
 
 end.

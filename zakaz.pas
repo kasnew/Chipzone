@@ -238,7 +238,7 @@ procedure TForm2.ComboBox1Change(Sender: TObject);
 begin
      edit7.text:='0';
      edit5.clear;
-     if (ComboBox1.Items[ComboBox1.ItemIndex]<>'ЧипЗона') and (ComboBox1.Items[ComboBox1.ItemIndex]<>'Услуга')
+     if (ComboBox1.Items[ComboBox1.ItemIndex]<>'ЧипЗона') and (ComboBox1.Items[ComboBox1.ItemIndex]<>'Послуга')
      then
                 begin
                       sqlQuery4.Active:=false;
@@ -355,7 +355,7 @@ begin
       if MessageDlg('Видалення товару', 'Видалити запис?', mtConfirmation, [mbYes, mbNo],0) = mrYes then
                 Begin
                      id:=SQLQuery1.FieldByName('ID').AsInteger;
-                     if (SQLQuery1.FieldByName('Поставщик').AsString='ЧипЗона') or (SQLQuery1.FieldByName('Поставщик').AsString='Услуга') then
+                     if (SQLQuery1.FieldByName('Поставщик').AsString='ЧипЗона') or (SQLQuery1.FieldByName('Поставщик').AsString='Послуга') then
                      begin
                           SQLQuery1.Delete;
                           sqlquery1.ApplyUpdates;// отправляем изменения в базу
@@ -392,7 +392,7 @@ end;
 //Добавить расходник
 procedure TForm2.Button4Click(Sender: TObject);
 begin
-     if (ComboBox1.Items[ComboBox1.ItemIndex]='ЧипЗона')or(ComboBox1.Items[ComboBox1.ItemIndex]='Услуга')then
+     if (ComboBox1.Items[ComboBox1.ItemIndex]='ЧипЗона')or(ComboBox1.Items[ComboBox1.ItemIndex]='Послуга')then
                     begin
                           SQLQuery1.Append;
                           SQLQuery1.edit;
@@ -498,9 +498,15 @@ end;
 
 //сохранить
 procedure TForm2.Button1Click(Sender: TObject);
+var s:string;
 begin
       rasschet;
-
+      if CheckBox4.Checked=true then
+                    begin
+                        s:=memo2.Text;
+                        memo2.Clear;
+                        memo2.Text:='Картка. '+s;
+                    end;
       with SQLQuery2 do
       begin
           Active:=false;
@@ -545,7 +551,7 @@ begin
       if StrToFloat(edit11.Text)<>0 then
       if (CheckBox2.Checked=true) and (triger=false) then
            begin
-                ShowMessage(BoolToStr(triger));
+
                form1.ComboBox2.ItemIndex:=0;
                if CheckBox4.Checked=true then form1.CheckBox4.Checked:=true;
                CheckBox4.Checked:=false;

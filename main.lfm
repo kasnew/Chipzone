@@ -1677,8 +1677,10 @@ object Form1: TForm1
             Left = 5
             Height = 23
             Top = 15
-            Width = 75
-            Anchors = [akTop, akLeft, akRight]
+            Width = 91
+            Font.Height = -12
+            Font.Name = 'Arial'
+            Font.Style = [fsBold]
             ItemHeight = 15
             ItemIndex = 0
             Items.Strings = (
@@ -1688,8 +1690,28 @@ object Form1: TForm1
               'Зняття'
             )
             OnChange = ComboBox3Change
+            ParentFont = False
             TabOrder = 0
             Text = 'Усі'
+          end
+          object LabeledEdit14: TLabeledEdit
+            AnchorSideLeft.Control = ComboBox3
+            AnchorSideLeft.Side = asrBottom
+            AnchorSideTop.Control = ComboBox3
+            AnchorSideBottom.Control = ComboBox3
+            AnchorSideBottom.Side = asrBottom
+            Left = 101
+            Height = 23
+            Top = 15
+            Width = 160
+            Anchors = [akTop, akLeft, akBottom]
+            BorderSpacing.Left = 5
+            EditLabel.Height = 15
+            EditLabel.Width = 160
+            EditLabel.Caption = 'Опис'
+            EditLabel.ParentColor = False
+            TabOrder = 1
+            OnChange = ComboBox3Change
           end
         end
       end

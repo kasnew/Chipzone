@@ -7,7 +7,7 @@
     <KeyWords Value=""/>
     <Comments Value=""/>
     <ReportCreateDate Value="1899-12-30 00:00:00"/>
-    <ReportLastChange Value="2018-12-14 15:04:32"/>
+    <ReportLastChange Value="2023-10-27 17:36:16"/>
     <ReportVersionBuild Value=""/>
     <ReportVersionMajor Value=""/>
     <ReportVersionMinor Value=""/>
@@ -17,14 +17,14 @@
     <Pages>
       <PrintToDefault Value="False"/>
       <DoublePass Value="False"/>
-      <SelectedPrinter Value="Default printer"/>
+      <SelectedPrinter Value="Send To OneNote 2016"/>
       <PageCount Value="1"/>
       <Page1>
         <Name Value="Page1"/>
         <ClassName Value="TfrPageReport"/>
         <Visible Value="True"/>
-        <Width Value="2100"/>
-        <Height Value="2970"/>
+        <Width Value="595"/>
+        <Height Value="842"/>
         <Script Value=""/>
         <PgSize Value="9"/>
         <Margins>
@@ -63,7 +63,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Квитанция №&#xA;"/>
+            <Memo Value="Квитанція №&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -119,7 +119,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Квитанция&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Квитанция&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -175,7 +175,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Наименование техники:&#xA;"/>
+            <Memo Value="Найменування техніки:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -231,7 +231,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Наименование_техники&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Наименование_техники&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -287,7 +287,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="от&#xA;"/>
+            <Memo Value="від&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -343,7 +343,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Конец_ремонта&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Конец_ремонта&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -384,7 +384,7 @@
           <Size>
             <Left Value="52"/>
             <Top Value="268"/>
-            <Width Value="140"/>
+            <Width Value="148"/>
             <Height Value="32"/>
           </Size>
           <Flags Value="3"/>
@@ -399,7 +399,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Дата приема:&#xA;"/>
+            <Memo Value="Дата прийому:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -455,7 +455,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Начало_ремонта&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Начало_ремонта&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -511,7 +511,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Описание неисправности:&#xA;"/>
+            <Memo Value="Опис несправності:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -567,7 +567,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Описание_неисправности&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Описание_неисправности&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -623,7 +623,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Выполненная работа (состояние техники):&#xA;"/>
+            <Memo Value="Виконана робота (стан техніки):&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -679,7 +679,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Выполнено&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Выполнено&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -735,7 +735,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Стоимость работы/диагностики:&#xA;"/>
+            <Memo Value="Вартість роботи/діагностики:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -791,7 +791,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Стоимость&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Стоимость&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -847,7 +847,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="грн.&#xA;"/>
+            <Memo Value="грн.&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -903,7 +903,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Сервисный центр &quot;ChipZone&quot;&#xA;"/>
+            <Memo Value="Сервісний центр &quot;ChipZone&quot;&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -959,7 +959,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Дата выдачи техники:&#xA;"/>
+            <Memo Value="Дата видачі техніки:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1015,7 +1015,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Конец_ремонта&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Конец_ремонта&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1071,7 +1071,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Имя:&#xA;"/>
+            <Memo Value="Ім`я:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1127,7 +1127,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Имя_заказчика&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Имя_заказчика&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1183,7 +1183,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="Телефон:&#xA;"/>
+            <Memo Value="Телефон:&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
@@ -1239,7 +1239,7 @@
           <Data>
             <Format Value="556"/>
             <FormatStr Value=""/>
-            <Memo Value="[SQLQuery2.&quot;Телефон&quot;]&#xA;"/>
+            <Memo Value="[SQLQuery2.&quot;Телефон&quot;]&#xD;&#xA;"/>
             <Script Value=""/>
             <GapX Value="0"/>
             <GapY Value="0"/>
