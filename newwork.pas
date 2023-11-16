@@ -76,14 +76,14 @@ begin
           'q','Q':new_ch:='й';'w','W':new_ch:='ц';'e','E':new_ch:='у';
           'r','R':new_ch:='к';'t','T':new_ch:='е';'y','Y':new_ch:='н';
           'u','U':new_ch:='г';'i','I':new_ch:='ш';'o','O':new_ch:='щ';
-          'p','P':new_ch:='з';'a','A':new_ch:='ф';'s','S':new_ch:='ы';
+          'p','P':new_ch:='з';'a','A':new_ch:='ф';'s','S':new_ch:='і';
           'd','D':new_ch:='в';'f','F':new_ch:='а';'g','G':new_ch:='п';
           'h','H':new_ch:='р';'j','J':new_ch:='о';'k','K':new_ch:='л';
           'l','L':new_ch:='д';'z','Z':new_ch:='я';'x','X':new_ch:='ч';
           'c','C':new_ch:='с';'v','V':new_ch:='м';'b','B':new_ch:='и';
           'n','N':new_ch:='т';'m','M':new_ch:='ь';'[','{':new_ch:='х';
-          ']','}':new_ch:='ъ';';',':':new_ch:='ж';'''','"':new_ch:='э';
-          ',','<':new_ch:='б';'.','>':new_ch:='ю';'`','~':new_ch:='ё';
+          ']','}':new_ch:='ї';';',':':new_ch:='ж';'''','"':new_ch:='э';
+          ',','<':new_ch:='б';'.','>':new_ch:='ю';'`','~':new_ch:='''';
           else new_ch:=ch;
           end;
           if n=1 then new_ch:=UTF8UpperCase(new_ch);//lazutf8

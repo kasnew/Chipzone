@@ -21,6 +21,7 @@ type
     Button5: TBitBtn;
     CheckBox1: TToggleBox;
     CheckBox2: TCheckBox;
+    CheckBox3: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
     DataSource1: TDataSource;
@@ -68,6 +69,7 @@ type
     procedure Button5Click(Sender: TObject);
     procedure CheckBox1Click(Sender: TObject);
     procedure CheckBox2Click(Sender: TObject);
+    procedure CheckBox3Click(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure DBGrid1PrepareCanvas(sender: TObject; DataCol: Integer;
       Column: TColumn; AState: TGridDrawState);
@@ -94,7 +96,20 @@ implementation
 {$R *.lfm}
  uses Main;
 { TForm6 }
+procedure sklad_connect;
+begin
+      form6.SQLQuery1.Active := False;
+      form6.SQLQuery1.SQL.Clear;
+      form6.SQLQuery1.SQL.Add('SELECT ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, Цена_уе, Курс, Вход, Наличие, Дата_продажи, №_квитанции');
+      form6.SQLQuery1.SQL.Add('FROM Расходники');
+      form6.SQLQuery1.SQL.Add('WHERE Наличие = :sost');
+      if form6.CheckBox3.Checked = True then form6.SQLQuery1.SQL.Add('GROUP BY Наименование_расходника');
+      form6.SQLQuery1.SQL.Add('ORDER BY Приход DESC');
+      form6.SQLQuery1.ParamByName('sost').AsBoolean := True;
+      form6.SQLQuery1.Active := True;
 
+      if form6.SQLQuery1.RecordCount=0 then form6.button3.Enabled:=false else form6.button3.Enabled:=true;
+end;
 procedure size_columns;
 begin
       form6.DBGrid1.Columns[0].Width:=0;//Код
@@ -297,6 +312,7 @@ begin
                   end;
     end else if ComboBox1.ItemIndex=2 then    //ARC
        begin
+
             n:=0;
             while length(s)>0 do
             begin
@@ -321,12 +337,14 @@ begin
                           dollar:=strtofloat(s2);
                           for n2:=1 to kol_clipboard do
                           begin
-                                SQLQuery1.Append;
+
+                               SQLQuery1.Append;
                                 SQLQuery1.FieldByName('Приход').AsDateTime:=DateTimePicker1.Date;
                                 SQLQuery1.FieldByName('Поставщик').AsString:=ComboBox1.Items[ComboBox1.ItemIndex];
                                 SQLQuery1.FieldByName('Накладная').AsString:=edit1.Text;
                                 SQLQuery1.FieldByName('Код_товара').AsString:=ID_clipboard;
                                 SQLQuery1.FieldByName('Наименование_расходника').AsString:=Name_clipboard;
+
                                 SQLQuery1.FieldByName('Курс').AsFloat:=StrToFloat(edit4.Text);
                                 SQLQuery1.FieldByName('Цена_уе').Asfloat:=dollar;
                                 SQLQuery1.FieldByName('Вход').AsFloat:=StrToFloat(edit4.Text)*dollar;
@@ -362,14 +380,8 @@ end;
 
 procedure TForm6.FormCreate(Sender: TObject);
 begin
-      SQLQuery1.Active:=false;
-      SQLQuery1.SQL.Clear;
-      SQLQuery1.SQL.Add('select ID, Приход, Поставщик, Накладная, Код_товара, Наименование_расходника, ROUND(Цена_уе,2), ROUND(Курс,2), ROUND(Вход,2), Наличие, Дата_продажи, №_квитанции  from Расходники where Наличие=:sost ORDER BY Приход DESC');
-      SQLQuery1.ParamByName('sost').AsBoolean:=true;
-      SQLQuery1.Active:=true;
-      size_columns;
-      if SQLQuery1.RecordCount=0 then button3.Enabled:=false else button3.Enabled:=true;
-      //SetBounds(0, NewTop, Width, NewHeight-koef_heith);
+     sklad_connect;
+     size_columns;
 end;
 
 procedure TForm6.FormShow(Sender: TObject);
@@ -436,6 +448,13 @@ begin
              SpinEdit1.Enabled:=true;
         end;
 end;
+
+procedure TForm6.CheckBox3Click(Sender: TObject);
+begin
+     sklad_connect;
+     size_columns;
+end;
+
 //появление галочки "импорт из контекстного меню" для Интеха
 procedure TForm6.ComboBox1Change(Sender: TObject);
 begin

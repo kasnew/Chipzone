@@ -26,7 +26,6 @@ type
     CheckBox2: TToggleBox;
     CheckBox3: TCheckBox;
     CheckBox4: TCheckBox;
-    CheckBox5: TCheckBox;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
     ComboBox3: TComboBox;
@@ -95,6 +94,8 @@ type
     LabeledEdit12: TLabeledEdit;
     LabeledEdit13: TLabeledEdit;
     LabeledEdit14: TLabeledEdit;
+    LabeledEdit15: TLabeledEdit;
+    LabeledEdit16: TLabeledEdit;
     LabeledEdit2: TLabeledEdit;
     LabeledEdit3: TLabeledEdit;
     LabeledEdit4: TLabeledEdit;
@@ -149,6 +150,7 @@ type
     SQLQuery3: TSQLQuery;
     SQLQuery4: TSQLQuery;
     SQLQuery5: TSQLQuery;
+    SQLQuery6: TSQLQuery;
     SQLTransaction1: TSQLTransaction;
     TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
@@ -274,11 +276,11 @@ begin
           Columns[3].Width:=0;//Выполненая работа
           Columns[4].Width:=65;//Квитанция
           Columns[4].Title.Caption := 'Квитанція';
-          Columns[5].Width:=form1.Width-800;//Наименование техники
+          Columns[5].Width:=form1.Width-820;//Наименование техники
           Columns[5].Title.Caption := 'Найменування техніки';
           Columns[6].Width:=105;//Имя
           Columns[6].Title.Caption := 'Ім''я клієнта';
-          Columns[7].Width:=85;//Телефон
+          Columns[7].Width:=105;//Телефон
           Columns[7].DisplayFormat := '###-###-##-##';
           Columns[8].Width:=105;//Начало ремонта
           Columns[8].Title.Caption := 'Початок ремонту';
@@ -313,10 +315,7 @@ end;
 //подключение к базе данных
 procedure rem_connect;
 begin
-    // showmessage('Ok');
       form1.SQLQuery1.Active:=false;
-//      form1.SQLite3Connection1.Connected:=false;
-//      form1.SQLite3Connection1.Connected:=true;
       form1.SQLQuery1.Sql.Clear;
       form1.SQLQuery1.SQL.add('select ID,  Стоимость, Описание_неисправности, Выполнено, Квитанция, Наименование_техники, Имя_заказчика, Телефон, Начало_ремонта, Конец_ремонта, Сумма, Оплачено, Примечание, Перезвонить, Доход, Состояние from Ремонт ORDER BY Начало_ремонта DESC, Квитанция DESC');
 
@@ -329,10 +328,7 @@ end;
 //подключение к базе данных
 procedure kasa_connect;
 begin
-    // showmessage('Ok');
       form1.SQLQuery5.Active:=false;
-//      form1.SQLite3Connection1.Connected:=false;
-//      form1.SQLite3Connection1.Connected:=true;
       form1.SQLQuery5.Sql.Clear;
       form1.SQLQuery5.SQL.add('select ID, Дата_створення, Дата_виконання, Категорія, Опис, Сума, Готівка, Карта from Каса ORDER BY Дата_створення DESC');
 
@@ -347,10 +343,23 @@ end;
 //вывод фин статистика за выбранный период
 procedure finstat;
 var Year, Month, Day: Word;
+//dohid:double;
 begin
-    if form1.CheckBox5.Checked=true then
-    begin
-        // подсчет финансовой статистики по дате с расходниками и чистой работы, и додхода с расходников
+   // підрахунок "Витрат" за активний місяць
+        form1.sqlQuery6.Active:=false;
+        form1.sqlQuery6.SQL.Clear;
+        form1.sqlQuery6.SQL.Add('Select sum(Сума) from Каса where Категорія=''Витрата''');
+        DecodeDate(Now, Year, Month, Day);
+        form1.SQLQuery6.SQL.Add(' and Дата_створення>=:date3 and Дата_створення<=:date4');
+        form1.sqlQuery6.ParamByName('date3').AsDate:=EncodeDate(Year, Month, 1);
+        form1.sqlQuery6.ParamByName('date4').AsDate:=now;
+        form1.sqlQuery6.Active:=true;
+        if form1.sqlQuery6.Fields[0].Value<>null then form1.LabeledEdit15.Text:=floattostr(form1.sqlQuery6.Fields[0].Value)
+        else form1.LabeledEdit15.Text:='0';
+        //form1.LabeledEdit16.Text:=floattostr(dohid-strtofloat(form1.LabeledEdit15.Text));
+
+
+  // подсчет финансовой статистики по дате с расходниками и чистой работы, и додхода с расходников
         form1.sqlQuery2.Active:=false;
         form1.sqlQuery2.SQL.Clear;
         form1.sqlQuery2.SQL.Add('Select sum(Стоимость), sum(Сумма), sum(Доход)  from Ремонт where Оплачено=:sost');
@@ -376,6 +385,7 @@ begin
         end;
 
         form1.sqlQuery2.Active:=true;
+
         //вывод фин статистики
         if form1.sqlQuery2.Fields[0].Value<>null then form1.Edit10.Text:=floattostr(form1.sqlQuery2.Fields[0].Value)
         else form1.edit10.Text:='0';
@@ -385,14 +395,14 @@ begin
 
         if form1.sqlQuery2.Fields[2].Value<>null then form1.Edit12.Text:=FloatToStr(trunc(form1.sqlQuery2.Fields[2].AsFloat*100)/100)
         else form1.edit12.Text:='0';
-    end
-    else
-    begin
-          form1.Edit10.Text:='0';
-          form1.Edit11.Text:='0';
-          form1.edit12.Text:='0';
-    end;
-    form1.Edit13.Text:=FloatToStrf(strtofloat(form1.edit10.text)+strtofloat(form1.edit12.text),ffFixed,8,2);
+
+        form1.Edit13.Text:=FloatToStrf(strtofloat(form1.edit10.text)+strtofloat(form1.edit12.text),ffFixed,8,2);
+
+        if form1.RadioButton5.Checked=true then //текущий месяц
+        begin
+             form1.LabeledEdit16.Visible:=true;
+             form1.LabeledEdit16.Text:=floattostr(strtofloat(form1.edit13.text)-strtofloat(form1.LabeledEdit15.text));
+        end else form1.LabeledEdit16.Visible:=false;
 end;
 //подсчет состояний квитанций
 procedure state_count;
@@ -572,6 +582,7 @@ end;
 //частковий перевод безготівки в готівку
 procedure TForm1.BitBtn3Click(Sender: TObject);
 begin
+   combobox2.ItemIndex:=0;
    CheckBox4.Checked:=false;
    LabeledEdit9.Text:=LabeledEdit12.Text;
    LabeledEdit13.text:='0';
@@ -586,6 +597,7 @@ end;
 //перевод усієї безготівки в готівку
 procedure TForm1.BitBtn4Click(Sender: TObject);
 begin
+  combobox2.ItemIndex:=0;
   CheckBox4.Checked:=false;
   LabeledEdit9.Text:=LabeledEdit13.Text;
   LabeledEdit13.text:='0';
@@ -706,9 +718,19 @@ end;
 //Подмена столбца "Состояние"
 procedure TForm1.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
+var PhoneNumber: string;
 begin
-     begin
-//          if Field.Name = 'Телефон' then TFloatField(Field):='###,###, ##, ##000-000-00-00';
+     //          if Field.Name = 'Телефон' then TFloatField(Field):='###,###, ##, ##000-000-00-00';
+     if Column.FieldName = 'Телефон' then
+  begin
+    PhoneNumber := SQLQuery1.FieldByName('Телефон').AsString;
+    if Length(PhoneNumber) = 10 then
+    begin
+      PhoneNumber := Copy(PhoneNumber, 1, 3) + '-' + Copy(PhoneNumber, 4, 3) + '-' + Copy(PhoneNumber, 7, 2) + '-' + Copy(PhoneNumber, 9, 2);
+      DBGrid1.Canvas.FillRect(Rect);
+      DBGrid1.Canvas.TextOut(Rect.Left + 2, Rect.Top + 2, PhoneNumber);
+    end;
+  end;
      if Column.FieldName = 'Состояние' then
      with DBGrid1.Canvas do
      begin
@@ -723,7 +745,6 @@ begin
           7:begin TextOut(Rect.Right-2-DBGrid1.Canvas.TextWidth('Одеса'),Rect.Top+2,'Одеса');end;
           end;
      end;
-end;
 end;
 
 //удаление квитанции кнопкой "Delete"
@@ -815,6 +836,7 @@ begin
      rem_connect;
      kasa_connect;
      state_count;
+     finstat;
      ID_remont:=1;//по умолчанию присвоим значение идентификатору выбраной записи
 
      //если записей нет, то деактивация кнопки "удалить"
@@ -839,7 +861,6 @@ procedure TForm1.FormShow(Sender: TObject);
 begin
      size_columns;
      size_columns2;
-     Button1.SetFocus;
 end;
 
 //Отчет "Оплачено"
@@ -896,7 +917,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -952,7 +973,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      Button1.SetFocus;
 end;
@@ -976,7 +997,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1004,7 +1025,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1023,7 +1044,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1042,7 +1063,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1061,7 +1082,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1080,13 +1101,12 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
 
 procedure TForm1.MenuItem29Click(Sender: TObject);
-var s : ansistring;
 begin
      SQLQuery4.Active:=false;
      SQLQuery4.sql.Clear;
@@ -1119,7 +1139,7 @@ begin
      form1.FormCreate(Self);
 
      if form1.CheckBox2.Checked=true then find;
-     if form1.CheckBox5.Checked=true then finstat;
+     finstat;
 
      SQLQuery1.RecNo:=rec_pos;
 end;
@@ -1210,7 +1230,7 @@ begin
           form1.FormCreate(Self);
 
           if form1.CheckBox2.Checked=true then find else rem_connect;
-          if form1.CheckBox5.Checked=true then finstat;
+          finstat;
 
           Button1.SetFocus;
           SQLQuery1.RecNo:=rec_pos;
@@ -1234,7 +1254,7 @@ end;
 
 procedure TForm1.Timer1Timer(Sender: TObject);
 begin
-     form1.Caption:='Сервіс центр "ЧіпЗона" v. 4.0.3          '+ TimeToStr(Time);
+     form1.Caption:='Сервіс центр "ЧіпЗона" v. 4.0.6          '+ TimeToStr(Time);
      form2.Caption:='Виконання роботи          '+ TimeToStr(Time);
      form6.Caption:='Склад          '+ TimeToStr(Time);
 end;

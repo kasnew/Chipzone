@@ -1203,8 +1203,8 @@ object Form6: TForm6
       AnchorSideBottom.Control = CheckBox1
       AnchorSideBottom.Side = asrBottom
       Left = 96
-      Height = 45
-      Top = 10
+      Height = 31
+      Top = 24
       Width = 96
       Anchors = [akTop, akBottom]
       Caption = 'Очистити'
@@ -1249,13 +1249,24 @@ object Form6: TForm6
     end
     object CheckBox1: TToggleBox
       Left = 8
-      Height = 45
-      Top = 10
+      Height = 31
+      Top = 24
       Width = 86
       Anchors = [akTop]
       Caption = 'Увімкнути'
       OnClick = CheckBox1Click
       TabOrder = 5
+    end
+    object CheckBox3: TCheckBox
+      Left = 9
+      Height = 19
+      Top = 0
+      Width = 75
+      Caption = 'Унікальні'
+      Checked = True
+      OnClick = CheckBox3Click
+      State = cbChecked
+      TabOrder = 6
     end
   end
   object DataSource1: TDataSource

@@ -243,7 +243,7 @@ begin
                 begin
                       sqlQuery4.Active:=false;
                       sqlQuery4.SQL.Clear;
-                      sqlQuery4.SQL.Add('select * from Расходники where Поставщик='''+ComboBox1.Items[ComboBox1.ItemIndex]+''''+' and Наличие=:s');
+                      sqlQuery4.SQL.Add('select * from Расходники where Поставщик='''+ComboBox1.Items[ComboBox1.ItemIndex]+''''+' and Наличие=:s GROUP BY Наименование_расходника ORDER BY Приход');
                       SQLQuery4.ParamByName('s').AsBoolean:=true;
                       sqlQuery4.Active:=true;
                       DBLookupComboBox1.Visible:=true;
@@ -436,7 +436,7 @@ begin
                           //обновление базы расходников "в наличии" на складе
                           sqlQuery4.Active:=false;
                           sqlQuery4.SQL.Clear;
-                          sqlQuery4.SQL.Add('select * from Расходники where Поставщик='''+ComboBox1.Items[ComboBox1.ItemIndex]+''''+' and Наличие=:s');
+                          sqlQuery4.SQL.Add('select * from Расходники where Поставщик='''+ComboBox1.Items[ComboBox1.ItemIndex]+''''+' and Наличие=:s GROUP BY Наименование_расходника ORDER BY Приход');
                           SQLQuery4.ParamByName('s').AsBoolean:=true;
                           sqlQuery4.Active:=true;
                           DBLookupComboBox1.Text:='';
