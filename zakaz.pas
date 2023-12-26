@@ -130,10 +130,11 @@ begin
            form2.Edit10.Visible:=true;
       end  else
       begin
-           podrobno:=form2.DBGrid1.Columns[5].Width;;
+           podrobno:=form2.DBGrid1.Columns[5].Width;
            form2.label17.Visible:=false;
            form2.Edit10.Visible:=false;
       end;
+//      form2.DBGrid1.Columns[7].DisplayFormat:='0.00';
       form2.DBGrid1.Columns[4].Width:=form2.Width-450+podrobno;
       form2.DBGrid1.Columns[6].Width:=65-podrobno;
       form2.DBGrid1.Columns[7].Width:=0;
